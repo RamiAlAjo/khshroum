@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description_en')->nullable(); // English description
             $table->text('description_ar')->nullable(); // Arabic description
             $table->string('image')->nullable(); // Image path or URL
+            $table->string('icon')->nullable(); // Icon file path (e.g. icons/my-icon.png)
             $table->enum('status', ['active', 'inactive', 'pending'])->default('active'); // Service status
             $table->string('slug')->unique(); // Unique slug
             $table->timestamps(); // created_at and updated_at

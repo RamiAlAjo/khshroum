@@ -24,7 +24,6 @@
 <link href="{{ asset('dist/plugins/nprogress/nprogress.css') }}" rel="stylesheet" />
 <link href="{{ asset('dist/plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('dist/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet" />
-<link href="{{ asset('dist/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <!-- Toastr CSS for Notifications -->
@@ -32,3 +31,4 @@
 
 <!-- FAVICON (Choose one) -->
 <link href="{{ asset('dist/images/favicon.png') }}" rel="shortcut icon" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">

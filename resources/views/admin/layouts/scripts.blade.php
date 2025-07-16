@@ -10,41 +10,30 @@
 <script src="{{ asset('dist/plugins/jvectormap/jquery-jvectormap-us-aea.js') }}"></script>
 <script src="{{ asset('dist/js/map.js') }}"></script>
 
-<!-- Moment.js and DateRangePicker -->
-<script src="{{ asset('dist/plugins/daterangepicker/moment.min.js') }}"></script>
-<script src="{{ asset('dist/plugins/daterangepicker/daterangepicker.js') }}"></script>
-
 <!-- Toastr for notifications -->
 <script src="{{ asset('dist/plugins/toaster/toastr.min.js') }}"></script>
 
 <!-- Custom Mono JS -->
 <script src="{{ asset('dist/js/mono.js') }}"></script>
 
-<script>
-    jQuery(document).ready(function() {
-        // Initialize Date Range Picker
-        jQuery('input[name="dateRange"]').daterangepicker({
-            autoUpdateInput: false,
-            singleDatePicker: true,
-            locale: {
-                cancelLabel: 'Clear'
-            }
-        });
-
-        // Handle Apply Action
-        jQuery('input[name="dateRange"]').on('apply.daterangepicker', function (ev, picker) {
-            jQuery(this).val(picker.startDate.format('MM/DD/YYYY'));
-        });
-
-        // Handle Clear Action
-        jQuery('input[name="dateRange"]').on('cancel.daterangepicker', function (ev, picker) {
-            jQuery(this).val('');
-        });
-    });
-</script>
-
 <!-- jQuery -->
 <script src="{{ asset('dist/plugins/jquery/jquery.min.js') }}"></script>
 
 <!-- Bootstrap 5 Bundle (contains both Bootstrap JS and Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
+<script>
+    function initSummernotes() {
+        $('.text-editor-desc').summernote({
+            height: 200
+        });
+    }
+
+    $(document).ready(function () {
+        initSummernotes();
+
+        $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function () {
+            initSummernotes(); // Re-init if tab becomes visible
+        });
+    });
+</script>

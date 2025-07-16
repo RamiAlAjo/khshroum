@@ -76,6 +76,17 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="icon" class="form-label">Icon</label>
+                        @if($service->icon)
+                            <div class="mb-2">
+                                <img src="{{ asset('storage/' . $service->icon) }}" alt="Service Icon" width="100">
+                            </div>
+                        @endif
+                        <input type="file" class="form-control" name="icon" id="icon">
+                        <small class="text-muted">Leave empty to keep current icon</small>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-control" name="status" id="status">
                             <option value="active" {{ old('status', $service->status) == 'active' ? 'selected' : '' }}>Active</option>

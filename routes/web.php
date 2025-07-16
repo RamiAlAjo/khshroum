@@ -33,7 +33,7 @@ use App\Http\Controllers\Admin\AdminProjectsController;
 use App\Http\Controllers\Admin\AdminProjectsCategoriesController;
 use App\Http\Controllers\Admin\AdminProjectsSubcategoriesController;
 use App\Http\Controllers\Admin\AdminStatsController;
-
+use App\Http\Controllers\Admin\BannerController;
 
 Route::get('/', [FrontHomepageController::class, 'index'])->name('home');
 
@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/home', [AdminHomepageController::class, 'index'])->name('admin_home');
-
+    Route::resource('banner', BannerController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/about', AdminAboutController::class);
     Route::resource('/faq', AdminFaqController::class);

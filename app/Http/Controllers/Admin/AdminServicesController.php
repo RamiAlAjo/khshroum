@@ -37,6 +37,7 @@ class AdminServicesController extends Controller
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'icon'  => 'nullable|image|max:2048',
             'status' => 'required|in:active,inactive,pending',
         ]);
 
@@ -50,6 +51,10 @@ class AdminServicesController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('services/images', 'public');
             $service->image = $path;
+        }
+        if ($request->hasFile('icon')) {
+            $path = $request->file('icon')->store('services/icon', 'public');
+            $service->icon = $path;
         }
 
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
@@ -77,6 +82,7 @@ class AdminServicesController extends Controller
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'icon'  => 'nullable|image|max:2048',
             'status' => 'required|in:active,inactive,pending',
         ]);
 
@@ -93,7 +99,13 @@ class AdminServicesController extends Controller
             $path = $request->file('image')->store('services/images', 'public');
             $service->image = $path;
         }
-
+        if ($request->hasFile('icon')) {
+            if ($service->image) {
+                \Storage::delete('public/' . $service->icon);
+            }
+            $path = $request->file('icon')->store('services/icon', 'public');
+            $service->icon = $path;
+        }
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
         $service->save();
 

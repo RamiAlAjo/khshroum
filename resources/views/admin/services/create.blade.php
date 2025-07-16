@@ -69,6 +69,11 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="icon" class="form-label">Icon (optional)</label>
+                        <input type="file" class="form-control" name="icon" id="icon">
+                    </div>
+
+                    <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-control" name="status" id="status">
                             <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
