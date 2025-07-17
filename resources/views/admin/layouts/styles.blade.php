@@ -32,3 +32,6 @@
 <!-- FAVICON (Choose one) -->
 <link href="{{ asset('dist/images/favicon.png') }}" rel="shortcut icon" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
+<link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+

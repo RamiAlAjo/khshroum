@@ -14,15 +14,13 @@ class AdminProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category', 'subcategory')->latest()->get();
+        $products = Product::latest()->get();
         return view('admin.products.index', compact('products'));
     }
 
     public function create()
     {
-        $categories = ProductCategory::where('status', 'active')->get();
-        $subcategories = ProductSubcategory::all(); // Add this line
-        return view('admin.products.create', compact('categories', 'subcategories'));
+        return view('admin.products.create');
     }
 
 
@@ -33,9 +31,7 @@ class AdminProductController extends Controller
             'name_ar' => 'required|string|max:255',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:5120', // 5MB max
-            'category_id' => 'required|exists:products_categories,id',
-            'subcategory_id' => 'nullable|exists:products_subcategories,id',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'slug' => 'required|string|unique:products,slug',
             'status' => 'required|in:active,inactive,pending',
         ]);
@@ -49,11 +45,10 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products.index')->with('status-success', 'Product created successfully!');
     }
 
-    public function edit(Product $product)
+    public function edit($id)
     {
-        $categories = ProductCategory::where('status', 'active')->get();
-        $subcategories = ProductSubcategory::where('category_id', $product->category_id)->get();
-        return view('admin.products.edit', compact('product', 'categories', 'subcategories'));
+        $product = Product::findOrFail($id);
+        return view('admin.products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
@@ -63,9 +58,7 @@ class AdminProductController extends Controller
             'name_ar' => 'required|string|max:255',
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
-            'image' => 'nullable|image|max:5120',
-            'category_id' => 'required|exists:products_categories,id',
-            'subcategory_id' => 'nullable|exists:products_subcategories,id',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
             'slug' => 'required|string|unique:products,slug,' . $product->id,
             'status' => 'required|in:active,inactive,pending',
         ]);

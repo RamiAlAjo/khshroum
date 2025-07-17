@@ -11,8 +11,8 @@ class AdminAboutController extends Controller
     // Show the About Us data
     public function index()
     {
-        $aboutUs = AboutUs::first(); // Assuming only one "About Us" entry
-        return view('admin.about.index', compact('aboutUs'));
+        $aboutUsRows = AboutUs::get(); // Assuming only one "About Us" entry
+        return view('admin.about.index', compact('aboutUsRows'));
     }
 
     // Show the form for creating the About Us page
@@ -24,13 +24,6 @@ class AdminAboutController extends Controller
     // Store a newly created About Us page in the database
     public function store(Request $request)
     {
-        // Check if there's already an "About Us" entry
-        $existingAboutUs = AboutUs::first();
-
-        if ($existingAboutUs) {
-            return redirect()->route('admin.about.index')->with('error', 'Only one About Us page can be created.');
-        }
-
         // Validate the incoming request data
         $request->validate([
             'about_us_title_en' => 'nullable|string',
@@ -40,13 +33,12 @@ class AdminAboutController extends Controller
         ]);
 
         // Create and store the About Us data
-        AboutUs::create([
+        $s = AboutUs::create([
             'about_us_title_en' => $request->input('about_us_title_en'),
             'about_us_title_ar' => $request->input('about_us_title_ar'),
             'about_us_description_en' => $request->input('about_us_description_en'),
             'about_us_description_ar' => $request->input('about_us_description_ar'),
         ]);
-
         return redirect()->route('admin.about.index')->with('success', 'About Us page created successfully!');
     }
 

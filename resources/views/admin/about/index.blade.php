@@ -21,11 +21,7 @@
                                 <h5 class="card-title pt-2">About Us</h5>
                             </div>
                             <div class="col-md-6 text-right">
-                                @if($aboutUs)
-                                    <span class="btn btn-secondary" disabled>About Us entry already exists</span>
-                                @else
-                                    <a href="{{ route('admin.about.create') }}" class="btn btn-primary">Add New</a>
-                                @endif
+                                <a href="{{ route('admin.about.create') }}" class="btn btn-primary">Add New</a>
                             </div>
                         </div>
 
@@ -53,11 +49,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(!$aboutUs)
+                                            @if(!$aboutUsRows)
                                                 <tr>
                                                     <td colspan="4" class="text-center">No About Us data found.</td>
                                                 </tr>
                                             @else
+                                            @foreach ($aboutUsRows as $aboutUs)
                                                 <tr>
                                                     <td>{{ $aboutUs->id }}</td>
                                                     <td>{{ $aboutUs->about_us_title_en }}</td>
@@ -90,6 +87,7 @@
                                                         </form>
                                                     </td>
                                                 </tr>
+                                            @endforeach
                                             @endif
                                         </tbody>
                                     </table>
@@ -109,11 +107,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(!$aboutUs)
+                                            @if(!$aboutUsRows)
                                                 <tr>
                                                     <td colspan="4" class="text-center">No About Us data found.</td>
                                                 </tr>
                                             @else
+                                                @foreach ($aboutUsRows as $aboutUs)
                                                 <tr>
                                                     <td>{{ $aboutUs->id }}</td>
                                                     <td>{{ $aboutUs->about_us_title_ar }}</td>
@@ -146,6 +145,7 @@
                                                         </form>
                                                     </td>
                                                 </tr>
+                                                @endforeach
                                             @endif
                                         </tbody>
                                     </table>

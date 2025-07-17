@@ -66,32 +66,6 @@
                         <input type="file" class="form-control" name="image" accept="image/*">
                     </div>
 
-                    <!-- Category -->
-                    <div class="mb-3">
-                        <label for="category_id" class="form-label">Category</label>
-                        <select class="form-control" name="category_id" required>
-                            <option value="">-- Select Category --</option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name_en }}
-                            </option>
-                        @endforeach
-                        </select>
-                    </div>
-
-                    <!-- Subcategory -->
-                    <div class="mb-3">
-                        <label for="subcategory_id" class="form-label">Subcategory</label>
-                        <select class="form-control" name="subcategory_id">
-                            <option value="">-- Optional --</option>
-                            @foreach($subcategories as $subcategory)
-                                <option value="{{ $subcategory->id }}" {{ old('subcategory_id') == $subcategory->id ? 'selected' : '' }}>
-                                    {{ $subcategory->name_en }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <!-- Status -->
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>

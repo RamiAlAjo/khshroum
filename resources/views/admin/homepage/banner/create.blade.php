@@ -78,10 +78,11 @@
                             <option value="inactive">Inactive</option>
                         </select>
                     </div>
+                    <div class="text-end">
+                        <a href="{{ route('admin.banner.index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
 
-
-                    <button type="submit" class="btn btn-success">Save Banner</button>
-                    <a href="{{ route('admin.banner.index') }}" class="btn btn-secondary">Cancel</a>
                 </form>
 
             </div>

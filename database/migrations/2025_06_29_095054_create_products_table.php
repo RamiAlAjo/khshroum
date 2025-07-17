@@ -19,8 +19,6 @@ return new class extends Migration
             $table->text('description_ar')->nullable(); // Arabic description
             $table->string('image')->nullable(); // Image URL/path
             $table->enum('status', ['active', 'inactive', 'pending'])->default('active'); // Product status
-            $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Foreign key to categories table
-            $table->foreignId('subcategory_id')->nullable()->constrained('products_subcategories')->onDelete('set null'); // Foreign key to products_subcategories table
             $table->string('slug')->unique(); // Unique slug for URL
             $table->timestamps(); // created_at and updated_at
         });

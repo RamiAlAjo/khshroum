@@ -82,8 +82,10 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">Cancel</a>
+                    <div class="text-end">
+                        <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </form>
 
             </div>

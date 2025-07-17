@@ -76,9 +76,10 @@
                             <option value="inactive" {{ old('status', $banner->status ?? '') == 'inactive' ? 'selected' : '' }}>Inactive</option>
                         </select>
                     </div>
-
-                    <button type="submit" class="btn btn-success">Update</button>
-                    <a href="{{ route('admin.banner.index') }}" class="btn btn-secondary">Cancel</a>
+                    <div class="text-end">
+                        <a href="{{ route('admin.banner.index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
                 </form>
 
             </div>
