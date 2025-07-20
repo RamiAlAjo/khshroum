@@ -1,0 +1,17 @@
+:root {
+    --color-primary: #FF5959;
+    --color-secondary: #37393D;
+}
+
+.btn-gradient {
+    background: linear-gradient(90deg, var(--color-secondary) 10%, var(--color-primary) 50%);
+}
+
+#main-header {
+    transition: transform 0.3s ease-in-out; /* Smooth transition for showing/hiding */
+    transform: translateY(0); /* Default state: visible */
+}
+
+#main-header.hidden {
+    transform: translateY(-100%); /* Move header fully out of view upwards */
+}

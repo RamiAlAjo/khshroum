@@ -13,6 +13,7 @@ class Banner extends Model
         'button_label_ar',
         'url',
         'image',
-        'status'
+        'status',
+        'position',
     ];
 }

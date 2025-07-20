@@ -31,34 +31,36 @@ class AdminSliderController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming data
-        $validatedData = $request->validate([
-            'title_en' => 'required|string|max:255',
-            'title_ar' => 'nullable|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'url' => 'nullable|url',
-        ]);
+            // Validate the incoming data
+            $validatedData = $request->validate([
+                'title_en' => 'required|string|max:255',
+                'title_ar' => 'nullable|string|max:255',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'url' => 'nullable|url',
+            ]);
 
-        // Handle the image upload and storage
-        if ($request->hasFile('image')) {
-            $slidersImageUploadPath = 'uploads/sliders/image/';
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $slidersImageFilename = time() . '.' . $ext;
-            $file->move($slidersImageUploadPath, $slidersImageFilename);
-            $imagePath = $slidersImageUploadPath . $slidersImageFilename;
-        }
+            // Handle the image upload and storage
+            if ($request->hasFile('image')) {
+                $slidersImageUploadPath = 'uploads/sliders/image/';
+                $file = $request->file('image');
+                $ext = $file->getClientOriginalExtension();
+                $slidersImageFilename = time() . '.' . $ext;
+                $file->move(public_path($slidersImageUploadPath), $slidersImageFilename);
+                $imagePath = $slidersImageUploadPath . $slidersImageFilename;
+            } else {
+                throw new \Exception('Image file not found in the request.');
+            }
 
-        // Create the new slider
-        PagesSlider::create([
-            'title_en' => $validatedData['title_en'],
-            'title_ar' => $validatedData['title_ar'] ?? null,  // If the Arabic title is empty, it can be null
-            'image' => $imagePath,  // Store the image path
-            'url' => $validatedData['url'] ?? null,  // If no URL is provided, make it null
-        ]);
+            // Create the new slider
+            PagesSlider::create([
+                'title_en' => $validatedData['title_en'],
+                'title_ar' => $validatedData['title_ar'] ?? null,
+                'image' => $imagePath,
+                'url' => $validatedData['url'] ?? null,
+            ]);
 
-        // Redirect with success message
-        return redirect()->route('admin.slider.index')->with('success', 'Slider image added successfully.');
+            // Redirect with success message
+            return redirect()->route('admin.slider.index')->with('success', 'Slider image added successfully.');
     }
 
     /**
