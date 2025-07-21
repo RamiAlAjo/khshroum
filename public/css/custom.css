@@ -1,17 +1,133 @@
 :root {
     --color-primary: #FF5959;
     --color-secondary: #37393D;
+    --color-gray: #D3D3D3;
+    --text-lg: 44px;
+    --text-md: 42px;
+    --text-sm: 32px;
+}
+
+.text-danger {
+    color: var(--color-primary);
+}
+section {
+    padding: 50px 0;
+    text-align: left;
+}
+
+h2 {
+    font-size: var(--text-md) !important;
+}
+
+
+p, h5  {
+    font-size:  var(--text-sm) !important;
+}
+
+.button {
+    padding: 10px 100px !important;
+    border-radius: 0 !important;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 20px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 
 .btn-gradient {
     background: linear-gradient(90deg, var(--color-secondary) 10%, var(--color-primary) 50%);
 }
 
+.btn-black {
+    background-color: var(--color-secondary) !important;
+}
+
 #main-header {
-    transition: transform 0.3s ease-in-out; /* Smooth transition for showing/hiding */
-    transform: translateY(0); /* Default state: visible */
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(0);
 }
 
 #main-header.hidden {
-    transform: translateY(-100%); /* Move header fully out of view upwards */
+    transform: translateY(-100%);
+}
+.banner-section {
+    padding: 0 0 50px 0;
+    height: 100vh;
+    overflow: hidden;
+
+}
+
+.banner-section .description {
+    font-size:  var(--text-lg);
+}
+
+.services-section .service-box{
+    border: 2px solid var(--color-gray);
+    transition: border 0.3s ease;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-box:hover h5 {
+    color: var(--color-primary) !important;
+
+}
+.service-box-wrapper {
+    text-align: center;
+}
+
+.service-box-wrapper img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.image-container img {
+    height: 300px;
+    width: 600px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+}
+
+.image-container:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
+ .product-wrapper  {
+    border: 2px solid var(--color-gray);
+    padding: 40px;
+ }
+
+.products-section .product-wrapper h2,
+.products-section .product-wrapper p {
+    color: var(--color-primary);
+ }
+.products-section .product-wrapper p {
+font-weight: lighter;
+}
+.service-box:hover, .products-section .product-wrapper:hover {
+    border-image: linear-gradient(90deg, var(--color-secondary) 10%, var(--color-primary) 50%) 1;
 }
