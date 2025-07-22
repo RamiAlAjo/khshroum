@@ -22,6 +22,15 @@
     {{-- Scripts --}}
     @include('front.layouts.scripts')
     @yield('scripts')
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.pathname === "/") {
+      document.body.classList.add("home");
+    } else {
+      document.body.classList.remove("home");
+    }
+  });
+</script>
 
 </body>
 </html>

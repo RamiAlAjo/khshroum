@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\AdminServicesController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\AdminWebsiteSettingController;
+use App\Http\Controllers\Admin\TeamMemberController;
+
 
 Route::get('/', [FrontHomepageController::class, 'index'])->name('home');
 
@@ -44,20 +46,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('/about', AdminAboutController::class);
     Route::resource('/slider', AdminSliderController::class);
     Route::resource('services', AdminServicesController::class);
+    Route::resource('/team', TeamMemberController::class);
     Route::resource('/settings', AdminWebsiteSettingController::class)->only('index','store');
  });
 
 // Front Routes
 Route::resource('about', FrontAboutUsController::class);
 Route::resource('product', FrontProductController::class);
-Route::resource('product-category', FrontProductCategoryController::class);
-Route::resource('product-subcategory', FrontProductSubcategoryController::class);
 Route::resource('services', FrontServicesController::class);
-Route::resource('faq', FrontFaqController::class);
-Route::resource('career', FrontCareerController::class);
 Route::resource('contact', FrontContactController::class);
-Route::resource('portfolio', FrontPortfolioController::class);
-Route::resource('projects', FrontProjectsController::class);
 
 
 require __DIR__ . '/auth.php';

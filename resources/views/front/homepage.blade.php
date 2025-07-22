@@ -1,4 +1,3 @@
-<x-front-slider />
 @extends('front.layouts.app')
 @section('content')
 
@@ -96,6 +95,76 @@
                 <span>{{ $locale === 'ar' ? 'منتجاتنا' : 'Our Products' }}</span>
             </a>
         </div>
+    </div>
+</section>
+
+<section class="position-relative banner-section" style="height: 400px; overflow: hidden;">
+    <!-- Banner Image -->
+    <img src="{{ asset($middleBanner->image) }}" alt="Banner"
+         class="w-100 h-100 object-fit-cover position-absolute top-0 start-0"
+         style="z-index: 0; filter: brightness(0.5);">
+
+    <!-- Overlay Content Container -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 px-5 py-5 d-flex flex-column justify-between text-white" style="z-index: 2;">
+
+        <!-- Top Left: Description -->
+        <div class="text-start mt-4">
+            <div class="lead description mt-2 fw-bold">
+                {!! app()->getLocale() === 'ar' ? $middleBanner->description_ar : $middleBanner->description_en !!}
+            </div>
+        </div>
+
+        <!-- Bottom Right: Button -->
+        @if($middleBanner->url)
+            <div class="mt-auto text-end">
+                <a href="{{ $middleBanner->url }}" class="btn button text-danger button bg-white fw-bold border-0">
+                    <span>
+                    {{ app()->getLocale() === 'ar' ? $middleBanner->button_label_ar : $middleBanner->button_label_en }}
+                    </span>
+                </a>
+            </div>
+        @endif
+
+    </div>
+</section>
+
+
+<section class="clients-section">
+    <div class="container">
+        <h2 class="fw-bold mb-5">{{ __('Our Clients') }}</h2>
+        <div class="d-flex flex-column justify-content-center">
+
+        </div>
+    </div>
+</section>
+
+<section class="position-relative banner-section" style="height: 400px; overflow: hidden;">
+    <!-- Banner Image -->
+    <img src="{{ asset($bottomBanner->image) }}" alt="Banner"
+         class="w-100 h-100 object-fit-cover position-absolute top-0 start-0"
+         style="z-index: 0; filter: brightness(0.5);">
+
+    <!-- Overlay Content Container -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 px-5 py-5 d-flex flex-column justify-between text-white" style="z-index: 2;">
+
+        <!-- Top Left: Description -->
+        <div class="text-start mt-4">
+            <div class="lead description mt-2">
+                {!! app()->getLocale() === 'ar' ? $bottomBanner->description_ar : $bottomBanner->description_en !!}
+            </div>
+        </div>
+
+        <!-- Bottom Right: Button -->
+        @if($bottomBanner->url)
+            <div class="mt-auto text-end">
+                <a href="{{ $bottomBanner->url }}" class="btn button text-danger button bg-white fw-bold border-0">
+                    <span>
+                    {{ app()->getLocale() === 'ar' ? $bottomBanner->button_label_ar : $bottomBanner->button_label_en }}
+                    </span>
+                </a>
+            </div>
+        @endif
+
     </div>
 </section>
 

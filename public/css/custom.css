@@ -5,6 +5,10 @@
     --text-lg: 44px;
     --text-md: 42px;
     --text-sm: 32px;
+    --text-xs: 24px;
+}
+body {
+    overflow-x: hidden;
 }
 
 .text-danger {
@@ -22,6 +26,11 @@ h2 {
 
 p, h5  {
     font-size:  var(--text-sm) !important;
+}
+
+.services-section h2, .services-section p, .services-section a {
+    color: var(--color-secondary);
+    text-decoration: none;
 }
 
 .button {
@@ -123,11 +132,133 @@ p, h5  {
 
 .products-section .product-wrapper h2,
 .products-section .product-wrapper p {
-    color: var(--color-primary);
- }
-.products-section .product-wrapper p {
-font-weight: lighter;
+    color: var(--color-secondary);
 }
-.service-box:hover, .products-section .product-wrapper:hover {
+
+.products-section .product-wrapper p {
+    font-weight: lighter;
+}
+
+.service-box:hover, .product-wrapper:hover {
     border-image: linear-gradient(90deg, var(--color-secondary) 10%, var(--color-primary) 50%) 1;
+}
+
+.products-section .product-wrapper:hover h2,
+.products-section .product-wrapper:hover p {
+    color: var(--color-primary);
+}
+
+footer .logo {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-image-source: linear-gradient(to bottom, var(--color-secondary), var(--color-primary));
+    border-image-slice: 1;
+}
+footer ol{
+    list-style-type: disc;
+}
+
+body:not(.home) header {
+    position: relative;
+    z-index: 1030;
+}
+
+body:not(.home) .banner-section {
+    margin-top: 0;
+}
+
+.product-title {
+    font-weight: bold;
+    color: var(--color-secondary);
+}
+
+.products-section h4 {
+    color: var(--color-secondary);
+    text-decoration: none;
+}
+.products-section a {
+    text-decoration: none;
+}
+.product-card {
+    padding: 50px;
+    gap: 30px;
+}
+
+.square-img {
+    width: 100%;
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.arrow-link {
+    visibility: hidden;
+}
+
+.products-section .card:hover {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-image-source: linear-gradient(to bottom, var(--color-secondary), var(--color-primary));
+    border-image-slice: 1;
+}
+
+.products-section .card:hover h4 {
+    color: var(--color-primary);
+}
+
+.products-section .card:hover .arrow-link {
+    display: inline-block;
+    visibility: visible;
+    margin-top: 8px;
+    text-align: right;
+    font-size: 1.25rem;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--color-secondary);
+}
+
+.product-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.product-list li a{
+    color: var(--color-secondary);
+    text-decoration: none;
+    font-size: var(--text-xs);
+}
+.product-list li a.active {
+    color: var(--color-primary);
+}
+
+.product-list li {
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.product-list li::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200px; /* adjust as needed */
+    height: 2px;
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+}
+
+.scrollable-product-list {
+    max-height: 250px; /* Adjust to show approx. 4 items */
+    max-width: 70%;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Optional: Hide scroll bar on WebKit if you want a cleaner look */
+.scrollable-product-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-product-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--color-secondary), var(--color-primary));
+    border-radius: 4px;
 }

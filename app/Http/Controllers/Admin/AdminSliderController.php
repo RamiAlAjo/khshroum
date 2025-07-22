@@ -31,36 +31,30 @@ class AdminSliderController extends Controller
      */
     public function store(Request $request)
     {
-            // Validate the incoming data
-            $validatedData = $request->validate([
-                'title_en' => 'required|string|max:255',
-                'title_ar' => 'nullable|string|max:255',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'url' => 'nullable|url',
-            ]);
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+        ]);
 
-            // Handle the image upload and storage
-            if ($request->hasFile('image')) {
-                $slidersImageUploadPath = 'uploads/sliders/image/';
-                $file = $request->file('image');
-                $ext = $file->getClientOriginalExtension();
-                $slidersImageFilename = time() . '.' . $ext;
-                $file->move(public_path($slidersImageUploadPath), $slidersImageFilename);
-                $imagePath = $slidersImageUploadPath . $slidersImageFilename;
-            } else {
-                throw new \Exception('Image file not found in the request.');
-            }
+        // Handle the image upload and storage
+        if ($request->hasFile('image')) {
+            $slidersImageUploadPath = 'uploads/sliders/image/';
+            $file = $request->file('image');
+            $ext = $file->getClientOriginalExtension();
+            $slidersImageFilename = time() . '.' . $ext;
+            $file->move(public_path($slidersImageUploadPath), $slidersImageFilename);
+            $imagePath = $slidersImageUploadPath . $slidersImageFilename;
+        } else {
+            throw new \Exception('Image file not found in the request.');
+        }
 
-            // Create the new slider
-            PagesSlider::create([
-                'title_en' => $validatedData['title_en'],
-                'title_ar' => $validatedData['title_ar'] ?? null,
-                'image' => $imagePath,
-                'url' => $validatedData['url'] ?? null,
-            ]);
+        // Create the new slider
+        PagesSlider::create([
+            'image' => $imagePath,
+        ]);
 
-            // Redirect with success message
-            return redirect()->route('admin.slider.index')->with('success', 'Slider image added successfully.');
+        // Redirect with success message
+        return redirect()->route('admin.slider.index')->with('success', 'Slider image added successfully.');
     }
 
     /**
@@ -82,7 +76,6 @@ class AdminSliderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        \Log::info('Update method called for slider ID: ' . $id);
 
         $slider = PagesSlider::find($id);
 
@@ -91,8 +84,7 @@ class AdminSliderController extends Controller
         }
 
         $request->validate([
-            'title_en' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         if ($request->hasFile('image')) {
@@ -102,14 +94,9 @@ class AdminSliderController extends Controller
             $slidersImageFilename = time() . '.' . $ext;
             $file->move($slidersImageUploadPath, $slidersImageFilename);
             $slider->image = $slidersImageUploadPath . $slidersImageFilename;
-            \Log::info('Image uploaded: ' . $slider->image);
         }
 
-        $slider->title_en = $request->title_en;
         $slider->save();
-
-        \Log::info('Slider updated successfully!');
-
         return redirect()->route('admin.slider.index')->with('status-success', 'Slider updated successfully!');
     }
 

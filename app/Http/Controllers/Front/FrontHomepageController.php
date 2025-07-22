@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
-use App\Models\WebsiteSetting;
 use App\Models\Service;
 use App\Models\Product;
 
@@ -13,10 +12,17 @@ class FrontHomepageController extends Controller
     public function index()
     {
         $locale = app()->getLocale();
-        $logo = WebsiteSetting::value('logo');
         $topBanner = Banner::where('position', 'top')
             ->where('status', 'active')
             ->first();
+
+        $middleBanner = Banner::where('position', 'middle')
+        ->where('status', 'active')
+        ->first();
+
+        $bottomBanner = Banner::where('position', 'bottom')
+        ->where('status', 'active')
+        ->first();
 
         $services = Service::where('status', 'active')
             ->orderBy('created_at', 'desc')
@@ -39,6 +45,6 @@ class FrontHomepageController extends Controller
             return $product;
         });
 
-        return view('front.homepage', compact('locale', 'logo', 'topBanner', 'services', 'products'));
+        return view('front.homepage', compact('locale',  'topBanner', 'middleBanner', 'bottomBanner', 'services', 'products'));
     }
 }

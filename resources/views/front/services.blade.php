@@ -1,61 +1,54 @@
-<x-front-slider />
 @extends('front.layouts.app')
-
 @section('content')
+@include('components.global-slider', ['pageTitle' => 'Services'])
 
-<div class="container mt-5">
+@php
+    $isArabic = app()->getLocale() === 'ar';
+@endphp
 
-    <style>
-        .services-title {
-            font-size: 36px;
-            font-weight: bold;
-            color: #00704A; /* Dark green */
-            text-align: center;
-            margin-bottom: 40px;
-        }
+<section class="services-section">
+    <div class="m-5">
+        <h2 class="fw-bold mb-3">{{ __('Our Services') }}</h2>
+        <p class="mb-5">
+            {{ __('Enhance your bakery with our professional services.') }}
+            {{ __('We offer') }}
+            <span class="fw-bold text-danger">{{ $services[0]['name_en'] ?? '' }}</span>,
+            <span class="fw-bold text-danger">{{ $services[1]['name_en'] ?? '' }}</span>
+            {{ __('and') }}
+            <span class="fw-bold text-danger">{{ $services[2]['name_en'] ?? '' }}</span>
+            {{ __('to support your flourish.') }}
+        </p>
 
-        .service-item img {
-            width: 100%;
-            max-width: 150px;
-            height: auto;
-        }
-
-        .service-item p {
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: 500;
-            color: #00704A;
-        }
-
-        /* Responsive spacing for small devices */
-        @media (max-width: 576px) {
-            .services-title {
-                font-size: 28px;
-                margin-bottom: 30px;
-            }
-
-            .service-item p {
-                font-size: 16px;
-            }
-        }
-    </style>
-
-    <h2 class="services-title">{{ __('Our Services') }}</h2>
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
+        <div class="d-flex flex-column justify-content-center">
         @foreach($services as $service)
             @php
-                $locale = app()->getLocale();
-                $name = $locale === 'ar' ? $service->name_ar : $service->name_en;
-                $imagePath = $service->image ? asset('storage/' . $service->image) : asset('default-service.png');
+                $name = $isArabic ? $service->name_ar : $service->name_en;
+                $description = $isArabic ? $service->description_ar : $service->description_en;
             @endphp
 
-            <div class="col text-center service-item">
-                <img src="{{ $imagePath }}" alt="{{ $name }}">
-                <p>{{ $name }}</p>
+            <div class="product-wrapper col-md-12 mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-4 mb-3 mb-md-0 image-container">
+                        <a href="{{ route('services.show', $service->id) }}">
+                            <img src="{{ asset('storage/' . $service->image) }}" alt="{{ $name }}" class="img-fluid rounded">
+                        </a>
+
+                    </div>
+
+                    <div class="col-md-8 product-box">
+                        <h2 class="fw-bold mb-4">{{ $name }}</h2>
+                        <p>{{ Str::limit($description, 150) }}</p>
+                        <div class="d-flex justify-content-end">
+                            <a href="#" class="btn text-white button btn-black border-0">
+                                <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endforeach
+        </div>
     </div>
-</div>
+</section>
 
 @endsection

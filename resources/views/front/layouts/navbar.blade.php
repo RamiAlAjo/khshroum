@@ -1,9 +1,9 @@
-<header id="main-header" class="fixed-top">
+<header id="main-header" class="{{ Request::is('/') ? 'fixed-top' : '' }}">
 
     <div class="px-5 z-2 w-100">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <img src="{{ asset($logo) }}" alt="Logo" width="150" height="150">
+                <img src="{{ asset($settings->logo) }}" alt="Logo" width="150" height="150">
             </div>
             <button class="btn p-0 border-0" id="burgerBtn" aria-label="Open Menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="#FF5959" viewBox="0 0 24 24">

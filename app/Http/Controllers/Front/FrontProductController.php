@@ -4,16 +4,21 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Banner;
 
 class FrontProductController extends Controller
 {
     public function index()
     {
+        $bottomBanner = Banner::where('position', 'bottom')
+        ->where('status', 'active')
+        ->first();
+
         // Fetch only active products, you can customize the order
         $products = Product::where('status', 'active')->latest()->get();
 
         // Pass them to the Blade view
-        return view('front.products', compact('products'));
+        return view('front.products', compact('products', 'bottomBanner'));
     }
 
   public function show(Product $product)

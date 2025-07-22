@@ -9,9 +9,9 @@ class FrontServicesController extends Controller
 {
     public function index()
     {
-        // Get only active services
+        $locale = app()->getLocale();
         $services = Service::where('status', 'active')->get();
 
-        return view('front.services', compact('services'));
+        return view('front.services', compact('locale', 'services'));
     }
 }
