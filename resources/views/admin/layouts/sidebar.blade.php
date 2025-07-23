@@ -64,6 +64,18 @@
                     </ul>
                 </li>
 
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#team" aria-expanded="false" aria-controls="team">
+                       <i class="fas fa-user-friends fs-5"></i>
+                        <span class="nav-text">Team Members</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="collapse sub-menu" id="team">
+                        <li><a class="sidenav-item-link" href="{{ route('admin.team.index') }}"><span class="nav-text">Team Members</span></a></li>
+                        <li><a class="sidenav-item-link" href="{{ route('admin.team.create') }}"><span class="nav-text">Create Team Members</span></a></li>
+                    </ul>
+                </li>
+
                 <!-- Products -->
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Products" aria-expanded="false" aria-controls="Products">
@@ -95,6 +107,69 @@
                         <li>
                             <a class="sidenav-item-link" href="{{ route('admin.services.create') }}">
                                 <span class="nav-text">Create Service</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Photo Albums -->
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Albums" aria-expanded="false" aria-controls="Albums">
+                        <i class="bi bi-collection-fill fs-5"></i>
+                        <span class="nav-text">Photo Albums</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="collapse sub-menu" id="Albums">
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.photo-album.index') }}">
+                                <span class="nav-text">Albums List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.photo-album.create') }}">
+                                <span class="nav-text">Create Photo Album</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Gallery -->
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Gallery" aria-expanded="false" aria-controls="Gallery">
+                        <i class="bi bi-image-fill fs-5"></i>
+                        <span class="nav-text">Photo Gallery</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="collapse sub-menu" id="Gallery">
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.photos.index') }}">
+                                <span class="nav-text">Photos List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.photos.create') }}">
+                                <span class="nav-text">Create Photo </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Videos -->
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Videos" aria-expanded="false" aria-controls="Videos">
+                        <i class="bi bi-camera-reels-fill fs-5"></i>
+                        <span class="nav-text">Videos</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="collapse sub-menu" id="Videos">
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.videos.index') }}">
+                                <span class="nav-text">Videos List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.videos.create') }}">
+                                <span class="nav-text">Create Video</span>
                             </a>
                         </li>
                     </ul>

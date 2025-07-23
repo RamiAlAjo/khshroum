@@ -7,16 +7,19 @@
             <div class="card-body">
                 <h5 class="card-title pt-2 text-dark font-weight-bold">Create About Us</h5>
 
-                <form action="{{ route('admin.about.store') }}" method="POST">
+                <form action="{{ route('admin.about.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <!-- Language Tabs -->
+                    <!-- Language + Image Tabs -->
                     <ul class="nav nav-tabs mb-3" id="langTabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="tab-en" data-bs-toggle="tab" href="#lang-en" role="tab" aria-controls="lang-en" aria-selected="true">English</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="tab-ar" data-bs-toggle="tab" href="#lang-ar" role="tab" aria-controls="lang-ar" aria-selected="false">Arabic</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-image" data-bs-toggle="tab" href="#lang-image" role="tab" aria-controls="lang-image" aria-selected="false">Image</a>
                         </li>
                     </ul>
 
@@ -53,6 +56,17 @@
                                 <textarea class="form-control shadow-sm text-end" name="about_us_description_ar" id="about_us_description_ar" rows="5">{{ old('about_us_description_ar') }}</textarea>
                                 @error('about_us_description_ar')
                                     <div class="alert alert-danger mt-2 text-end">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Image Tab -->
+                        <div class="tab-pane fade" id="lang-image" role="tabpanel" aria-labelledby="tab-image">
+                            <div class="form-group">
+                                <label for="about_us_image">Upload Image</label>
+                                <input type="file" class="form-control shadow-sm" name="about_us_image" id="about_us_image" accept="image/*">
+                                @error('about_us_image')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>

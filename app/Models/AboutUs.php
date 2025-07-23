@@ -18,5 +18,6 @@ class AboutUs extends Model
         'about_us_title_ar',
         'about_us_description_en',
         'about_us_description_ar',
+        'image',
     ];
 }

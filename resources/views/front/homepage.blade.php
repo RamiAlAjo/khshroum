@@ -42,7 +42,7 @@
             @foreach($services as $key => $service)
                 <div class="col-md-4 mb-4 service-box-wrapper">
                     <img src="{{ asset('storage/'.$service['icon']) }}" alt="Service Icon" class="img-fluid rounded-circle">
-                    <div class="p-4 mt-4 mb-3 service-box">
+                    <div class="p-4 mt-4 mb-3 service-box bordered-container"">
                         <h5 class="{{ $key === 2 ? 'text-danger' : 'text-dark' }}">
                             {{ $service['name'] }}
                         </h5>
@@ -65,7 +65,7 @@
         <h2 class="fw-bold mb-5">{{ __('Few of Our Highlighted Products') }}</h2>
         <div class="d-flex flex-column justify-content-center">
             @foreach($products as $key => $product)
-                <div class="product-wrapper col-md-12 mb-4">
+                <div class="product-wrapper col-md-12 mb-4 bordered-container"">
                     <div class="d-flex justofy content-space-between">
                         <!-- Product Details -->
                         <div class="col-md-8 product-box">

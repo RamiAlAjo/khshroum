@@ -14,4 +14,9 @@ class FrontServicesController extends Controller
 
         return view('front.services', compact('locale', 'services'));
     }
+    public function show(Service $service)
+    {
+        $locale = app()->getLocale();
+        return view('front.service_show', compact('locale', 'service'));
+    }
 }

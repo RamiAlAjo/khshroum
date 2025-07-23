@@ -4,7 +4,7 @@
 
 <!-- Main container for the page content -->
 <section class="products-section">
-    <div class="m-5">
+    <div class="m-5 p-5 content-wrapper">
         <div class="row">
             <!-- Left Column (4 cols) -->
             <div class="col-md-4">

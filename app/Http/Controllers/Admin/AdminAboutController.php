@@ -24,51 +24,64 @@ class AdminAboutController extends Controller
     // Store a newly created About Us page in the database
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $request->validate([
+        $data = $request->validate([
             'about_us_title_en' => 'nullable|string',
             'about_us_title_ar' => 'nullable|string',
             'about_us_description_en' => 'nullable|string',
             'about_us_description_ar' => 'nullable|string',
+            'about_us_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
-        // Create and store the About Us data
-        $s = AboutUs::create([
-            'about_us_title_en' => $request->input('about_us_title_en'),
-            'about_us_title_ar' => $request->input('about_us_title_ar'),
-            'about_us_description_en' => $request->input('about_us_description_en'),
-            'about_us_description_ar' => $request->input('about_us_description_ar'),
+        if ($request->hasFile('about_us_image')) {
+            $data['image'] = $request->file('about_us_image')->store('about_us', 'public');
+        }
+
+        AboutUs::create([
+            'about_us_title_en' => $data['about_us_title_en'] ?? null,
+            'about_us_title_ar' => $data['about_us_title_ar'] ?? null,
+            'about_us_description_en' => $data['about_us_description_en'] ?? null,
+            'about_us_description_ar' => $data['about_us_description_ar'] ?? null,
+            'image' => $data['image'] ?? null,
         ]);
+
         return redirect()->route('admin.about.index')->with('success', 'About Us page created successfully!');
     }
 
     // Show the form for editing the About Us page
     public function edit($id)
     {
-        $aboutUs = AboutUs::findOrFail($id);
-        return view('admin.about.edit', compact('aboutUs'));
+        $about = AboutUs::findOrFail($id);
+        return view('admin.about.edit', compact('about'));
     }
 
     // Update the About Us page in the database
     public function update(Request $request, $id)
     {
-        // Validate the incoming data
-        $request->validate([
+        $data = $request->validate([
             'about_us_title_en' => 'nullable|string',
             'about_us_title_ar' => 'nullable|string',
             'about_us_description_en' => 'nullable|string',
             'about_us_description_ar' => 'nullable|string',
+            'about_us_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+
         ]);
 
-        // Find the About Us entry by ID
         $aboutUs = AboutUs::findOrFail($id);
 
-        // Update the About Us entry
+        if ($request->hasFile('about_us_image')) {
+            // Delete old image if you want: Storage::disk('public')->delete($aboutUs->image);
+            $data['image'] = $request->file('about_us_image')->store('about_us', 'public');
+        } else {
+            // Keep old image if no new image uploaded
+            $data['image'] = $aboutUs->image;
+        }
+
         $aboutUs->update([
-            'about_us_title_en' => $request->input('about_us_title_en'),
-            'about_us_title_ar' => $request->input('about_us_title_ar'),
-            'about_us_description_en' => $request->input('about_us_description_en'),
-            'about_us_description_ar' => $request->input('about_us_description_ar'),
+            'about_us_title_en' => $data['about_us_title_en'] ?? $aboutUs->about_us_title_en,
+            'about_us_title_ar' => $data['about_us_title_ar'] ?? $aboutUs->about_us_title_ar,
+            'about_us_description_en' => $data['about_us_description_en'] ?? $aboutUs->about_us_description_en,
+            'about_us_description_ar' => $data['about_us_description_ar'] ?? $aboutUs->about_us_description_ar,
+            'image' => $data['image'],
         ]);
 
         return redirect()->route('admin.about.index')->with('status-success', 'About Us page updated successfully!');

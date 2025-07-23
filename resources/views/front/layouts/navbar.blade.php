@@ -3,7 +3,9 @@
     <div class="px-5 z-2 w-100">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <img src="{{ asset($settings->logo) }}" alt="Logo" width="150" height="150">
+                <a href="{{route('home')}}" class="href">
+                    <img src="{{ asset($settings->logo) }}" alt="Logo" width="150" height="150">
+                </a>
             </div>
             <button class="btn p-0 border-0" id="burgerBtn" aria-label="Open Menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="#FF5959" viewBox="0 0 24 24">
@@ -20,10 +22,14 @@
         <button id="closeMenu" class="btn-close btn-close-white ms-auto mb-4" aria-label="Close"></button>
 
         <nav class="nav flex-column gap-3 fs-5">
-            <a class="nav-link text-white" href="/">Home</a>
+            <a class="nav-link text-white" href="{{route('home')}}">Home</a>
             <a class="nav-link text-white" href="/about">About Us</a>
-            <a class="nav-link text-white" href="/products">Products</a>
-            <a class="nav-link text-white" href="/contact">Contact</a>
+            <a class="nav-link text-white" href="/product">Products</a>
+            <a class="nav-link text-white" href="/services">Services</a>
+            <a class="nav-link text-white" href="/clients">Clients</a>
+            <a class="nav-link text-white" href="/links">Links</a>
+            <a class="nav-link text-white" href="/gallery">Gallery</a>
+            <a class="nav-link text-white" href="/contact">Contact Us</a>
         </nav>
     </div>
 </header>

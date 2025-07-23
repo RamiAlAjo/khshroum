@@ -7,7 +7,7 @@
 @endphp
 
 <section class="services-section">
-    <div class="m-5">
+    <div class="m-5 p-5 content-wrapper">
         <h2 class="fw-bold mb-3">{{ __('Our Services') }}</h2>
         <p class="mb-5">
             {{ __('Enhance your bakery with our professional services.') }}
@@ -26,7 +26,7 @@
                 $description = $isArabic ? $service->description_ar : $service->description_en;
             @endphp
 
-            <div class="product-wrapper col-md-12 mb-4">
+            <div class="product-wrapper col-md-12 mb-4 bordered-container"">
                 <div class="row align-items-center">
                     <div class="col-md-4 mb-3 mb-md-0 image-container">
                         <a href="{{ route('services.show', $service->id) }}">

@@ -45,6 +45,7 @@
                                                 <th>#</th>
                                                 <th>Title (EN)</th>
                                                 <th>Description (EN)</th>
+                                                <th>Image</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -59,6 +60,11 @@
                                                     <td>{{ $aboutUs->id }}</td>
                                                     <td>{{ $aboutUs->about_us_title_en }}</td>
                                                     <td>{!! $aboutUs->about_us_description_en !!}</td>
+                                                    <td>
+                                                    @if($aboutUs->image)
+                                                            <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="Current Image" style="max-width: 200px; border-radius: 5px;">
+                                                    @endif
+                                                    </td>
                                                     <td>
                                                         <a class="btn btn-sm btn-info" href="{{ route('admin.about.edit', $aboutUs->id) }}">Edit</a>
                                                         <form action="{{ route('admin.about.destroy', $aboutUs->id) }}" method="POST" style="display:inline;">

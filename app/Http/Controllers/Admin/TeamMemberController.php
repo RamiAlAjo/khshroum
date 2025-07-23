@@ -27,7 +27,7 @@ class TeamMemberController extends Controller
         $data = $request->validate([
             'name_en' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         $data['image'] = $request->file('image')->store('team', 'public');
@@ -51,21 +51,25 @@ class TeamMemberController extends Controller
     }
 
     // Update member
-    public function update(Request $request, TeamMember $teamMember)
+    public function update(Request $request, TeamMember $team)
     {
-        $data = $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+            $data = $request->validate([
+                'name_en' => 'required|string|max:255',
+                'name_ar' => 'required|string|max:255',
+                'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            ]);
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('team', 'public');
-        }
+            if ($request->hasFile('image')) {
+                $data['image'] = $request->file('image')->store('team', 'public');
+            } else {
+                $data['image'] = $team->image;
+            }
 
-        $teamMember->update($data);
 
-        return redirect()->route('admin.team.index')->with('success', 'Team member updated.');
+            $team->update($data);
+
+
+            return redirect()->route('admin.team.index')->with('success', 'Team member updated.');
     }
 
     // Delete member

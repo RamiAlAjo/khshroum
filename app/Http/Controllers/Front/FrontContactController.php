@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\WebsiteSetting;
 
 class FrontContactController extends Controller
 {
     public function index()
     {
-        return view('front.contact');
+        $isArabic = app()->getLocale() === 'ar';
+        $settings = WebsiteSetting::first();
+
+        return view('front.contact', compact('isArabic', 'settings'));
     }
 }

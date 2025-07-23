@@ -1,75 +1,25 @@
-<x-front-slider />
 @extends('front.layouts.app')
-
 @section('content')
+@include('components.global-slider', ['pageTitle' => 'Products'])
 
-<!-- Main container for the page content -->
-<div class="container mt-5">
-
-    <style>
-        .product-title {
-            font-size: 36px;
-            font-weight: bold;
-            color: #00704A; /* Dark green */
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .product-item img {
-            width: 100%;
-            max-width: 150px;
-            height: auto;
-        }
-
-        .product-item p {
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: 500;
-            color: #00704A;
-        }
-
-        /* Responsive spacing for small devices */
-        @media (max-width: 576px) {
-            .product-title {
-                font-size: 28px;
-                margin-bottom: 30px;
-            }
-
-            .product-item p {
-                font-size: 16px;
-            }
-        }
-    </style>
-
-    <h2 class="product-title text-center mb-4">{{ $product->name_en }}</h2>
-
-    <!-- Product Info Section -->
-    <div class="product-details">
-        <div class="product-info">
-            <h3>{{ $product->name_en }}</h3>
-            <p class="description">{{ $product->description_en ?? 'No description available.' }}</p>
-        </div>
-    </div>
-
-    <!-- Display 3 Clickable Products from the Same Subcategory -->
-    <h2 class="product-title text-center mb-4">Other Products in This Subcategory</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 justify-content-center">
-        @forelse ($otherProducts as $otherProduct)
-            <div class="col text-center product-item">
-                <!-- Make the product clickable -->
-                <a href="{{ route('product.show', $otherProduct->slug) }}">
-                    <img src="{{ $otherProduct->image ? asset('storage/' . $otherProduct->image) : asset('images/placeholder.png') }}"
-                         alt="{{ $otherProduct->name_en }}" class="img-fluid mb-2" style="max-height: 180px;">
-                    <p>{{ $otherProduct->name_en }}</p>
+<div class="m-5 p-5 content-wrapper">
+    <div class="row align-items-center">
+        <div class="col-md-7 text-start">
+            <h2 class="fw-bold mb-3">{{ $product->name_en }}</h2>
+            <p class="mb-5">
+                {{ $product->description_en ?? 'No description available.' }}
+            </p>
+            <div class="d-flex justify-content-start">
+                <a href="#" class="btn text-white button btn-black border-0">
+                    <span>{{ $locale === 'ar' ? 'Download PDF' : 'Download PDF' }}</span>
                 </a>
             </div>
-        @empty
-            <div class="col-12 text-center">
-                <p>No other products available in this subcategory at the moment.</p>
-            </div>
-        @endforelse
+        </div>
+        <div class="col-md-5 text-center">
+            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name_en }}" class="img-fluid rounded">
+        </div>
     </div>
-
 </div>
+
 
 @endsection

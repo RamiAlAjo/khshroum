@@ -7,34 +7,36 @@
             <div class="card-body">
                 <h5 class="card-title pt-2 text-dark font-weight-bold">Edit About Us</h5>
 
-                <form action="{{ route('admin.about.update', $aboutUs->id) }}" method="POST">
+                <form action="{{ route('admin.about.update', $about->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
-                    <!-- Language Tabs -->
+                    <!-- Language + Image Tabs -->
                     <ul class="nav nav-tabs mb-3" id="langTabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="tab-en" data-bs-toggle="tab" href="#lang-en" role="tab">English</a>
+                            <a class="nav-link active" id="tab-en" data-bs-toggle="tab" href="#lang-en" role="tab" aria-controls="lang-en" aria-selected="true">English</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="tab-ar" data-bs-toggle="tab" href="#lang-ar" role="tab">Arabic</a>
+                            <a class="nav-link" id="tab-ar" data-bs-toggle="tab" href="#lang-ar" role="tab" aria-controls="lang-ar" aria-selected="false">Arabic</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-image" data-bs-toggle="tab" href="#lang-image" role="tab" aria-controls="lang-image" aria-selected="false">Image</a>
                         </li>
                     </ul>
 
                     <div class="tab-content" id="langTabsContent">
                         <!-- English Tab -->
-                        <div class="tab-pane fade show active" id="lang-en" role="tabpanel">
+                        <div class="tab-pane fade show active" id="lang-en" role="tabpanel" aria-labelledby="tab-en">
                             <div class="form-group">
                                 <label for="about_us_title_en">Title (English)</label>
-                                <input type="text" class="form-control shadow-sm" name="about_us_title_en" id="about_us_title_en" value="{{ old('about_us_title_en', $aboutUs->about_us_title_en) }}">
+                                <input type="text" class="form-control shadow-sm" name="about_us_title_en" id="about_us_title_en" value="{{ old('about_us_title_en', $about->about_us_title_en) }}">
                                 @error('about_us_title_en')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="form-group mt-3">
                                 <label for="about_us_description_en">Description (English)</label>
-                                <textarea class="form-control shadow-sm" name="about_us_description_en" id="about_us_description_en" rows="5">{{ old('about_us_description_en', $aboutUs->about_us_description_en) }}</textarea>
+                                <textarea class="form-control shadow-sm" name="about_us_description_en" id="about_us_description_en" rows="5">{{ old('about_us_description_en', $about->about_us_description_en) }}</textarea>
                                 @error('about_us_description_en')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
@@ -42,21 +44,38 @@
                         </div>
 
                         <!-- Arabic Tab -->
-                        <div class="tab-pane fade" id="lang-ar" role="tabpanel">
+                        <div class="tab-pane fade" id="lang-ar" role="tabpanel" aria-labelledby="tab-ar">
                             <div class="form-group">
                                 <label for="about_us_title_ar" class="float-end">العنوان (Arabic)</label>
-                                <input type="text" class="form-control shadow-sm text-end" name="about_us_title_ar" id="about_us_title_ar" value="{{ old('about_us_title_ar', $aboutUs->about_us_title_ar) }}">
+                                <input type="text" class="form-control shadow-sm text-end" name="about_us_title_ar" id="about_us_title_ar" value="{{ old('about_us_title_ar', $about->about_us_title_ar) }}">
                                 @error('about_us_title_ar')
                                     <div class="alert alert-danger mt-2 text-end">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="form-group mt-3">
                                 <label for="about_us_description_ar" class="float-end">الوصف (Arabic)</label>
-                                <textarea class="form-control shadow-sm text-end" name="about_us_description_ar" id="about_us_description_ar" rows="5">{{ old('about_us_description_ar', $aboutUs->about_us_description_ar) }}</textarea>
+                                <textarea class="form-control shadow-sm text-end" name="about_us_description_ar" id="about_us_description_ar" rows="5">{{ old('about_us_description_ar', $about->about_us_description_ar) }}</textarea>
                                 @error('about_us_description_ar')
                                     <div class="alert alert-danger mt-2 text-end">{{ $message }}</div>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <!-- Image Tab -->
+                        <div class="tab-pane fade" id="lang-image" role="tabpanel" aria-labelledby="tab-image">
+                            <div class="form-group">
+                                <label for="about_us_image">Upload Image</label>
+                                <input type="file" class="form-control shadow-sm" name="about_us_image" id="about_us_image" accept="image/*">
+                                @error('about_us_image')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+
+                                @if($about->image)
+                                    <div class="mt-3">
+                                        <p>Current Image:</p>
+                                        <img src="{{ asset('storage/' . $about->image) }}" alt="Current Image" style="max-width: 200px; border-radius: 5px;">
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

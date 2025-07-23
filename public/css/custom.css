@@ -9,10 +9,33 @@
 }
 body {
     overflow-x: hidden;
+    font-family: 'Raleway', sans-serif;
+}
+
+body:not(.home) header {
+    position: relative;
+    z-index: 1030;
+}
+
+body:not(.home) .banner-section {
+    margin-top: 0;
+}
+
+#main-header {
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(0);
+}
+
+#main-header.hidden {
+    transform: translateY(-100%);
 }
 
 .text-danger {
     color: var(--color-primary);
+}
+
+.text-dark {
+    color: var(--color-secondary) !important;
 }
 section {
     padding: 50px 0;
@@ -21,6 +44,7 @@ section {
 
 h2 {
     font-size: var(--text-md) !important;
+    text-transform: capitalize;
 }
 
 
@@ -28,6 +52,19 @@ p, h5  {
     font-size:  var(--text-sm) !important;
 }
 
+.bordered-container, .form-section :is(input, textarea){
+    border: 2px solid var(--color-gray);
+    transition: border 0.3s ease;
+}
+
+.bordered-container:hover {
+    border-image: linear-gradient(90deg, var(--color-secondary) 10%, var(--color-primary) 50%) 1;
+}
+
+.form-section :is(input, textarea):is(:focus, :active) {
+    border-image: linear-gradient(90deg, var(--color-secondary) 10%, var(--color-primary) 50%) 2;
+    box-shadow: unset;
+}
 .services-section h2, .services-section p, .services-section a {
     color: var(--color-secondary);
     text-decoration: none;
@@ -71,14 +108,6 @@ p, h5  {
     background-color: var(--color-secondary) !important;
 }
 
-#main-header {
-    transition: transform 0.3s ease-in-out;
-    transform: translateY(0);
-}
-
-#main-header.hidden {
-    transform: translateY(-100%);
-}
 .banner-section {
     padding: 0 0 50px 0;
     height: 100vh;
@@ -91,8 +120,6 @@ p, h5  {
 }
 
 .services-section .service-box{
-    border: 2px solid var(--color-gray);
-    transition: border 0.3s ease;
     height: 200px;
     display: flex;
     align-items: center;
@@ -125,10 +152,9 @@ p, h5  {
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
 }
- .product-wrapper  {
-    border: 2px solid var(--color-gray);
+ .product-wrapper {
     padding: 40px;
- }
+}
 
 .products-section .product-wrapper h2,
 .products-section .product-wrapper p {
@@ -139,32 +165,9 @@ p, h5  {
     font-weight: lighter;
 }
 
-.service-box:hover, .product-wrapper:hover {
-    border-image: linear-gradient(90deg, var(--color-secondary) 10%, var(--color-primary) 50%) 1;
-}
-
 .products-section .product-wrapper:hover h2,
 .products-section .product-wrapper:hover p {
     color: var(--color-primary);
-}
-
-footer .logo {
-    border-left: 2px solid;
-    border-right: 2px solid;
-    border-image-source: linear-gradient(to bottom, var(--color-secondary), var(--color-primary));
-    border-image-slice: 1;
-}
-footer ol{
-    list-style-type: disc;
-}
-
-body:not(.home) header {
-    position: relative;
-    z-index: 1030;
-}
-
-body:not(.home) .banner-section {
-    margin-top: 0;
 }
 
 .product-title {
@@ -241,19 +244,18 @@ body:not(.home) .banner-section {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 200px; /* adjust as needed */
+    width: 200px;
     height: 2px;
     background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
 }
 
 .scrollable-product-list {
-    max-height: 250px; /* Adjust to show approx. 4 items */
+    max-height: 250px;
     max-width: 70%;
     overflow-y: auto;
     padding-right: 5px;
 }
 
-/* Optional: Hide scroll bar on WebKit if you want a cleaner look */
 .scrollable-product-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -261,4 +263,55 @@ body:not(.home) .banner-section {
 .scrollable-product-list::-webkit-scrollbar-thumb {
     background: linear-gradient(to bottom, var(--color-secondary), var(--color-primary));
     border-radius: 4px;
+}
+
+.about-section .aboutUs img {
+    width: auto;
+    object-fit: cover;
+    aspect-ratio:5/5;
+}
+
+.team-members .card{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-members img{
+    width: auto;
+    height: 310px;
+    object-fit: cover;
+}
+
+
+footer .logo {
+    border-left: 2px solid;
+    border-right: 2px solid;
+    border-image-source: linear-gradient(to bottom, var(--color-secondary), var(--color-primary));
+    border-image-slice: 1;
+}
+
+footer ol{
+    list-style-type: disc;
+}
+
+.form-section :is(input, textarea, .btn-black) {
+    width: 60%;
+}
+
+.settings i {
+    font-size: 60px;
+}
+
+.gallery-thumb {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.gallery-thumb:hover {
+    transform: scale(1.05);
 }
