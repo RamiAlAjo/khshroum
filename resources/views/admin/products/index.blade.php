@@ -47,6 +47,8 @@
                                                 <th>Image</th>
                                                 <th>Name (EN)</th>
                                                 <th>Description (EN)</th>
+                                                                                                <th>PDF</th>
+
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -58,6 +60,13 @@
                                                     <td><img src="{{ asset('storage/' . $product->image) }}" alt="image" width="60"></td>
                                                     <td>{{ $product->name_en }}</td>
                                                     <td>{!! Str::limit($product->description_en, 100) !!}</td>
+                                                    <td>
+                                                        @if($product->pdf)
+                                                            <iframe src="{{ asset('storage/' . $product->pdf) }}" width="300" height="300" frameborder="0"></iframe>
+                                                        @else
+                                                            No file available
+                                                        @endif
+                                                    </td>
                                                     <td><span class="badge bg-{{ $product->status == 'active' ? 'success' : 'secondary' }}">{{ ucfirst($product->status) }}</span></td>
                                                     <td>
                                                         <a class="btn btn-sm btn-info" href="{{ route('admin.products.edit', $product->id) }}">Edit</a>

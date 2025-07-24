@@ -32,6 +32,7 @@ class AdminProductController extends Controller
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'pdf' => 'nullable|mimes:pdf|max:10240',
             'slug' => 'required|string|unique:products,slug',
             'status' => 'required|in:active,inactive,pending',
         ]);
@@ -39,6 +40,13 @@ class AdminProductController extends Controller
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products/images', 'public');
         }
+
+        if ($request->hasFile('pdf')) {
+            $validated['pdf'] = $request->file('pdf')->store('pdfs', 'public');
+        } else {
+            $validated['imapdfge'] = $product->pdf ?? null;
+        }
+
 
         Product::create($validated);
 
@@ -59,6 +67,7 @@ class AdminProductController extends Controller
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'pdf' => 'nullable|file|mimes:pdf|max:10240',
             'slug' => 'required|string|unique:products,slug,' . $product->id,
             'status' => 'required|in:active,inactive,pending',
         ]);
@@ -69,6 +78,17 @@ class AdminProductController extends Controller
             }
             $validated['image'] = $request->file('image')->store('products/images', 'public');
         }
+        if ($request->hasFile('pdf')) {
+            // Delete the old resume if it exists
+            if ($product->pdf) {
+                \Storage::delete('public/' . $product->pdf);
+            }
+
+            // Store the new resume
+            $resumePath = $request->file('pdf')->store('products/pdfs', 'public');
+            $validated['pdf'] = $resumePath;
+        }
+
 
         $product->update($validated);
 

@@ -16,8 +16,8 @@ class FrontProductController extends Controller
 
     public function show(Product $product)
     {
-        $locale = app()->getLocale();
-        return view('front.products_show', compact('locale', 'product'));
+        $isArabic = app()->getLocale() === 'ar';
+        return view('front.products_show', compact('isArabic', 'product'));
     }
 
 }

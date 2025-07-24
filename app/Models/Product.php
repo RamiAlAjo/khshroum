@@ -23,6 +23,7 @@ class Product extends Model
         'description_en',
         'description_ar',
         'image',
+        'pdf',
         'status',
         'category_id',
         'subcategory_id',
@@ -32,25 +33,8 @@ class Product extends Model
     // Optionally define the cast types for certain attributes
     protected $casts = [
         'status' => 'string',
-        'category_id' => 'integer',
-        'subcategory_id' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    // Relationships (if you have category and subcategory models)
-    public function category()
-    {
-        return $this->belongsTo(ProductCategory::class, 'category_id');
-    }
-
-
-    public function subcategory()
-    {
-        return $this->belongsTo(ProductSubcategory::class, 'subcategory_id');
-    }
-
-
-    // For slug generation, you can use a package like `cviebrock/eloquent-sluggable`
-    // or create a method to handle it manually.
 }

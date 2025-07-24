@@ -7,18 +7,34 @@
                     <img src="{{ asset($settings->logo) }}" alt="Logo" width="150" height="150">
                 </a>
             </div>
-            <button class="btn p-0 border-0" id="burgerBtn" aria-label="Open Menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="#FF5959" viewBox="0 0 24 24">
-                    <path d="M4 6h16M4 12h16M4 18h16" stroke="#FF5959" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </button>
+            <div class="d-flex flex-row">
+                @php
+                    $locale = app()->getLocale();
+                    $isArabic = $locale === 'ar';
+                    $nextLocale = $isArabic ? 'en' : 'ar';
+                    $flag = $isArabic ? '🇯🇴' : '🇬🇧';
+                    $label = $isArabic ? 'AR' : 'EN';
+                @endphp
+
+                <a href="{{ route('change.language', ['locale' => $nextLocale]) }}"
+                class="btn bordered-container btn-outline-secondary btn-sm d-flex align-items-center"
+                style="font-size: 1rem;">
+                    {{ $flag }} {{ $label }}
+                </a>
+
+                <button class="btn p-0 border-0" id="burgerBtn" aria-label="Open Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="#FF5959" viewBox="0 0 24 24">
+                        <path d="M4 6h16M4 12h16M4 18h16" stroke="#FF5959" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 
 
     <div id="burgerMenu"
          class="position-fixed top-0 end-0 bg-dark text-white p-4"
-         style="width: 250px; height: 100vh; transform: translateX(100%); transition: transform 0.3s ease-in-out; z-index: 1050;">
+         >
         <button id="closeMenu" class="btn-close btn-close-white ms-auto mb-4" aria-label="Close"></button>
 
         <nav class="nav flex-column gap-3 fs-5">

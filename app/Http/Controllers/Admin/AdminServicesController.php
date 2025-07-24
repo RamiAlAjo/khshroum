@@ -37,6 +37,7 @@ class AdminServicesController extends Controller
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'pdf' => 'nullable|mimes:pdf|max:10240',
             'icon'  => 'nullable|image|max:2048',
             'status' => 'required|in:active,inactive,pending',
         ]);
@@ -57,6 +58,9 @@ class AdminServicesController extends Controller
             $service->icon = $path;
         }
 
+        if ($request->hasFile('pdf')) {
+            $service->pdf = $request->file('pdf')->store('pdfs', 'public');
+        }
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
         $service->save();
 
@@ -82,6 +86,7 @@ class AdminServicesController extends Controller
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'pdf' => 'nullable|file|mimes:pdf|max:10240',
             'icon'  => 'nullable|image|max:2048',
             'status' => 'required|in:active,inactive,pending',
         ]);
@@ -105,6 +110,16 @@ class AdminServicesController extends Controller
             }
             $path = $request->file('icon')->store('services/icon', 'public');
             $service->icon = $path;
+        }
+        if ($request->hasFile('pdf')) {
+            // Delete the old resume if it exists
+            if ($service->pdf) {
+                \Storage::delete('public/' . $service->pdf);
+            }
+
+            // Store the new resume
+            $resumePath = $request->file('pdf')->store('service/pdfs', 'public');
+            $service->pdf = $resumePath;
         }
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
         $service->save();

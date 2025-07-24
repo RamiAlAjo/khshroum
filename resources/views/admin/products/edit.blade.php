@@ -75,6 +75,20 @@
                         <input type="file" class="form-control" name="image" accept="image/*">
                     </div>
 
+                    <div class="form-group">
+                        <label for="pdf">Upload PDF</label>
+                        <input type="file" name="pdf" id="pdf" class="form-control shadow-sm" accept="application/pdf">
+                        @error('pdf')
+                            <div class="alert alert-danger mt-2">{{ $message }}</div>
+                        @enderror
+                        @if(!empty($product->pdf))
+                            <a href="{{ asset('storage/' . $product->pdf) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                Download PDF
+                            </a>
+                        @endif
+
+                    </div>
+
                     <!-- Status -->
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>

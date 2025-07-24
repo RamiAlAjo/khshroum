@@ -39,9 +39,17 @@
                         <h2 class="fw-bold mb-4">{{ $name }}</h2>
                         <p>{{ Str::limit($description, 150) }}</p>
                         <div class="d-flex justify-content-end">
-                            <a href="#" class="btn text-white button btn-black border-0">
+                        @if($service->pdf && \Illuminate\Support\Facades\Storage::disk('public')->exists($service->pdf))
+                                <a href="{{ asset('storage/' . $service->pdf) }}"
+                                class="btn text-white button btn-black border-0">
+                                    <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>
+                                </a>
+                        @else
+                            <a href="#"
+                            class="btn text-white button btn-black border-0" style="background-color:gray!important">
                                 <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>
                             </a>
+                        @endif
                         </div>
                     </div>
                 </div>

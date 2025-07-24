@@ -112,6 +112,48 @@
                     </ul>
                 </li>
 
+                <!-- Clients -->
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Clients" aria-expanded="false" aria-controls="Clients">
+                        <i class="bi bi-person-badge fs-5"></i>
+                        <span class="nav-text">Clients</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="collapse sub-menu" id="Clients">
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.clients.index') }}">
+                                <span class="nav-text">Clients List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.clients.create') }}">
+                                <span class="nav-text">Create Client</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Links -->
+                <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Links" aria-expanded="false" aria-controls="Links">
+                        <i class="bi bi-link-45deg fs-5"></i>
+                        <span class="nav-text">Links</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="collapse sub-menu" id="Links">
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.links.index') }}">
+                                <span class="nav-text">Links List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="sidenav-item-link" href="{{ route('admin.links.create') }}">
+                                <span class="nav-text">Create Link</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Photo Albums -->
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Albums" aria-expanded="false" aria-controls="Albums">

@@ -7,10 +7,6 @@
     <img src="{{ asset($topBanner->image) }}" alt="Banner" class="w-100 h-100 object-fit-cover">
     <div class="position-absolute top-50 start-0 translate-middle-y px-5 z-2 w-100">
         <div class="container mt-5">
-            <h1 class="display-4 fw-bold mb-3">
-                {{ config('app.name') }}
-            </h1>
-
             <div class="lead mb-4 description">
                 {!! $locale === 'ar' ? $topBanner->description_ar : $topBanner->description_en !!}
             </div>
@@ -27,16 +23,17 @@
 
 <section class="services-section">
     <div class="container">
-        <h2 class="fw-bold mb-3">{{ __('Our Services') }}</h2>
-        <p class="mb-5">
-            {{ __('Enhance your bakery with our professional services.') }}
-            {{ __('We offer') }}
-            <span class="fw-bold text-danger">{{ $services[0]['name'] ?? '' }}</span>,
-            <span class="fw-bold text-danger">{{ $services[1]['name'] ?? '' }}</span>
-            {{ __('and') }}
-            <span class="fw-bold text-danger">{{ $services[2]['name'] ?? '' }}</span>
-            {{ __('to support your flourish.') }}
-        </p>
+    <h2 class="fw-bold mb-3">{{ __('lang.title') }}</h2>
+
+    <p class="mb-5">
+        {{ __('lang.description.start') }}
+        <span class="fw-bold text-danger">{{ $services[0]['name'] ?? '' }}</span>,
+        <span class="fw-bold text-danger">{{ $services[1]['name'] ?? '' }}</span>
+        {{ __('lang.description.middle') }}
+        <span class="fw-bold text-danger">{{ $services[2]['name'] ?? '' }}</span>
+        {{ __('lang.description.end') }}
+    </p>
+
 
         <div class="row justify-content-center">
             @foreach($services as $key => $service)
@@ -62,7 +59,7 @@
 
 <section class="products-section">
     <div class="container">
-        <h2 class="fw-bold mb-5">{{ __('Few of Our Highlighted Products') }}</h2>
+        <h2 class="fw-bold mb-5">{{ __('lang.highlighted_title') }}</h2>
         <div class="d-flex flex-column justify-content-center">
             @foreach($products as $key => $product)
                 <div class="product-wrapper col-md-12 mb-4 bordered-container"">
@@ -70,15 +67,23 @@
                         <!-- Product Details -->
                         <div class="col-md-8 product-box">
                             <h2 class="fw-bold mb-4">
-                                {{ $product->name }}
+                                {{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}
                             </h2>
                             <p>
                                 {{ Str::limit($product->description, 150) }}
                             </p>
                             <div class="d-flex justify-content-start">
-                                <a href="#" class="btn text-white button btn-black border-0">
-                                    <span>{{ $locale === 'ar' ? 'Download PDF' : 'Download PDF' }}</span>
-                                </a>
+                            @if($product->pdf && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->pdf))
+                                    <a href="{{ asset('storage/' . $product->pdf) }}"
+                                    class="btn text-white button btn-black border-0">
+                                        <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>
+                                    </a>
+                                    @else
+                                    <a href="#"
+                                    class="btn text-white button btn-black border-0" style="background-color:gray!important">
+                                        <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-4 image-container">
@@ -131,9 +136,19 @@
 
 <section class="clients-section">
     <div class="container">
-        <h2 class="fw-bold mb-5">{{ __('Our Clients') }}</h2>
-        <div class="d-flex flex-column justify-content-center">
-
+        <h2 class="fw-bold mb-5">{{ __('lang.our_clients') }}</h2>
+        <div class="row">
+            @forelse ($clients as $client)
+                <div class="col-md-4 mb-4 text-center">
+                    <a href="{{ $client->url ??'' }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ asset('storage/' . $client->image) }}" alt="Client Image" class="img-fluid shadow-sm square-img bordered-container">
+                    </a>
+                </div>
+            @empty
+                <div class="col-12 text-center">
+                    <p class="text-muted">No clients found.</p>
+                </div>
+            @endforelse
         </div>
     </div>
 </section>

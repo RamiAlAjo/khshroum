@@ -10,9 +10,17 @@
                 {{ $product->description_en ?? 'No description available.' }}
             </p>
             <div class="d-flex justify-content-start">
-                <a href="#" class="btn text-white button btn-black border-0">
-                    <span>{{ $locale === 'ar' ? 'Download PDF' : 'Download PDF' }}</span>
-                </a>
+                @if($product->pdf && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->pdf))
+                    <a href="{{ asset('storage/' . $product->pdf) }}"
+                    class="btn text-white button btn-black border-0">
+                        <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>
+                    </a>
+                    @else
+                    <a href="#"
+                    class="btn text-white button btn-black border-0" style="background-color:gray!important">
+                        <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>
+                    </a>
+                @endif
             </div>
         </div>
         <div class="col-md-5 text-center">

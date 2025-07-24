@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\PhotoAlbum;
 use App\Models\PhotoGallery;
+use App\Models\Video;
 
 class FrontGalleryController extends Controller
 {
@@ -36,6 +37,10 @@ class FrontGalleryController extends Controller
 
     public function getVideos()
     {
+        $videos = Video::latest()->get();
+        $isArabic = app()->getLocale() === 'ar';
+
+        return view('front.videos', compact('videos', 'isArabic'));
     }
 
 }

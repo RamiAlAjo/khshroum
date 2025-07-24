@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Service;
 use App\Models\Product;
+use App\Models\Client;
 
 class FrontHomepageController extends Controller
 {
     public function index()
     {
         $locale = app()->getLocale();
+        $isArabic = app()->getLocale() === 'ar';
         $topBanner = Banner::where('position', 'top')
             ->where('status', 'active')
             ->first();
@@ -44,7 +46,8 @@ class FrontHomepageController extends Controller
             $product->description = $product->{"description_$locale"};
             return $product;
         });
+        $clients = Client::limit(3)->get();
 
-        return view('front.homepage', compact('locale',  'topBanner', 'middleBanner', 'bottomBanner', 'services', 'products'));
+        return view('front.homepage', compact('locale', 'isArabic', 'topBanner', 'middleBanner', 'bottomBanner', 'services', 'products', 'clients'));
     }
 }

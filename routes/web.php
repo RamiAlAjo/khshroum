@@ -9,6 +9,8 @@ use App\Http\Controllers\Front\FrontProductController;
 use App\Http\Controllers\Front\FrontServicesController;
 use App\Http\Controllers\Front\FrontGalleryController;
 use App\Http\Controllers\Front\FrontContactController;
+use App\Http\Controllers\Front\FrontClientsController;
+use App\Http\Controllers\Front\FrontLinksController;
 
 
 use App\Http\Controllers\Admin\AdminHomepageController;
@@ -22,6 +24,12 @@ use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\AdminPhotoAlbumController;
 use App\Http\Controllers\Admin\AdminPhotoGalleryController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Admin\ClientsController;
+use App\Http\Controllers\Admin\LinksController;
+use App\Http\Middleware\SetLocale;
+
+Route::middleware(['web', SetLocale::class])->group(function () {
+
 Route::get('/', [FrontHomepageController::class, 'index'])->name('home');
 
 
@@ -45,6 +53,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('/slider', AdminSliderController::class);
     Route::resource('services', AdminServicesController::class);
     Route::resource('/team', TeamMemberController::class);
+    Route::resource('/clients', ClientsController::class);
+    Route::resource('/links', LinksController::class);
     Route::resource('/settings', AdminWebsiteSettingController::class)->only('index','store');
     Route::resource('/photo-album', AdminPhotoAlbumController::class);
     Route::resource('/photos', AdminPhotoGalleryController::class);
@@ -61,5 +71,15 @@ Route::get('/gallery', [FrontGalleryController::class, 'index']);
 Route::get('/albums', [FrontGalleryController::class, 'getAlbums'])->name('albums');
 Route::get('/albums/{id}', [FrontGalleryController::class, 'show'])->name('album.show');
 Route::get('/videos', [FrontGalleryController::class, 'getVideos'])->name('videos');
-
+Route::get('/clients', [FrontClientsController::class, 'index'])->name('clients');
+Route::get('/links', [FrontLinksController::class, 'index'])->name('links');
+   // Language Switching Route
+    Route::get('lang/{locale}', function ($locale) {
+        if (in_array($locale, ['en', 'ar'])) {
+            session(['locale' => $locale]); // Store the locale in session
+            app()->setLocale($locale);      // Set application locale
+        }
+        return redirect()->back();
+    })->name('change.language');
+});
 require __DIR__ . '/auth.php';
