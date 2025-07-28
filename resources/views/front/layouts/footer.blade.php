@@ -48,15 +48,16 @@
             </div>
             <div class="col-md-3 d-flex flex-column align-items-center">
                 <ol class="ps-3">
-                    <li><a href="/" class="fw-bold text-dark text-decoration-none">Home</a></li>
-                    <li><a href="/services" class="fw-bold text-dark text-decoration-none">Services</a></li>
-                    <li><a href="/products" class="fw-bold text-dark text-decoration-none">Products</a></li>
-                    <li><a href="/clients" class="fw-bold text-dark text-decoration-none">Clients</a></li>
-                    <li><a href="/gallery" class="fw-bold text-dark text-decoration-none">Gallery</a></li>
-                    <li><a href="/links" class="fw-bold text-dark text-decoration-none">Link</a></li>
-                    <li><a href="/contact" class="fw-bold text-dark text-decoration-none">Contact Us</a></li>
-                    <li><a href="/about" class="fw-bold text-dark text-decoration-none">About Us</a></li>
+                  <li><a href="/" class="fw-bold text-dark text-decoration-none">{{ __('Home') }}</a></li>
+                    <li><a href="/services" class="fw-bold text-dark text-decoration-none">{{ __('Services') }}</a></li>
+                    <li><a href="/products" class="fw-bold text-dark text-decoration-none">{{ __('Products') }}</a></li>
+                    <li><a href="/clients" class="fw-bold text-dark text-decoration-none">{{ __('Clients') }}</a></li>
+                    <li><a href="/gallery" class="fw-bold text-dark text-decoration-none">{{ __('Gallery') }}</a></li>
+                    <li><a href="/links" class="fw-bold text-dark text-decoration-none">{{ __('Links') }}</a></li>
+                    <li><a href="/contact" class="fw-bold text-dark text-decoration-none">{{ __('Contact Us') }}</a></li>
+                    <li><a href="/about" class="fw-bold text-dark text-decoration-none">{{ __('About Us') }}</a></li>
                     <li><a href="/en" class="fw-bold text-dark text-decoration-none">Eng</a></li>
+
                 </ol>
 
             </div>

@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 @section('content')
-@include('components.global-slider', ['pageTitle' => 'Clients'])
+@include('components.global-slider', ['pageTitle' => __('Clients')])
 
 <div class="m-5 p-5 content-wrapper">
 

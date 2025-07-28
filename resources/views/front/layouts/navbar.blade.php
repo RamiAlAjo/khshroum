@@ -37,15 +37,16 @@
          >
         <button id="closeMenu" class="btn-close btn-close-white ms-auto mb-4" aria-label="Close"></button>
 
+
         <nav class="nav flex-column gap-3 fs-5">
-            <a class="nav-link text-white" href="{{route('home')}}">Home</a>
-            <a class="nav-link text-white" href="/about">About Us</a>
-            <a class="nav-link text-white" href="/product">Products</a>
-            <a class="nav-link text-white" href="/services">Services</a>
-            <a class="nav-link text-white" href="/clients">Clients</a>
-            <a class="nav-link text-white" href="/links">Links</a>
-            <a class="nav-link text-white" href="/gallery">Gallery</a>
-            <a class="nav-link text-white" href="/contact">Contact Us</a>
+            <a class="nav-link text-white" href="{{route('home')}}">{{ __('Home') }}</a>
+            <a class="nav-link text-white" href="/about">{{ __('About Us') }}</a>
+            <a class="nav-link text-white" href="/product">{{ __('Products') }}</a>
+            <a class="nav-link text-white" href="/services">{{ __('Services') }}</a>
+            <a class="nav-link text-white" href="/clients">{{ __('Clients') }}</a>
+            <a class="nav-link text-white" href="/links">{{ __('Links') }}</a>
+            <a class="nav-link text-white" href="/gallery">{{ __('Gallery') }}</a>
+            <a class="nav-link text-white" href="/contact">{{ __('Contact Us') }}</a>
         </nav>
     </div>
 </header>
