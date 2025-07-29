@@ -7,5 +7,15 @@
   "Links": "Links",
   "Gallery": "Gallery",
   "Contact Us": "Contact Us",
-  "Address": "Address"
+  "Address": "Address",
+     "title": "Our Services",
+    "description.start": "We offer a variety of services including",
+    "description.middle": "and also",
+    "description.end": "to meet your needs.",
+    "highlighted_title": "Highlighted Products",
+    "our_services": "Our Services",
+    "our_products": "Our Products",
+    "our_clients": "Our Clients",
+    "download_pdf": "Download PDF",
+    "no_clients": "No clients found."
 }

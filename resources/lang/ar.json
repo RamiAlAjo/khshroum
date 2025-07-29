@@ -7,5 +7,15 @@
   "Links": "الروابط",
   "Gallery": "المعرض",
   "Contact Us": "اتصل بنا",
-  "Address": "العنوان"
+  "Address": "العنوان",
+      "title": "خدماتنا",
+    "description.start": "نحن نقدم مجموعة من الخدمات مثل",
+    "description.middle": "وكذلك",
+    "description.end": "لتلبية احتياجاتك.",
+    "highlighted_title": "المنتجات المميزة",
+    "our_services": "خدماتنا",
+    "our_products": "منتجاتنا",
+    "our_clients": "عملاؤنا",
+    "download_pdf": "تحميل PDF",
+    "no_clients": "لا يوجد عملاء."
 }

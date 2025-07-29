@@ -1,4 +1,5 @@
 @extends('front.layouts.app')
+
 @section('content')
 @include('components.global-slider', ['pageTitle' => __('Contact Us')])
 
@@ -42,6 +43,7 @@
         </div>
     </div>
 
+    <!-- Contact Form Section -->
     <div class="row min-vh-100 align-items-stretch contact">
         <div class="col-lg-6 d-flex">
             <div class="contact-box p-4 w-100 d-flex flex-column justify-content-center">
@@ -54,29 +56,31 @@
                 </p>
 
                 <div class="form-section">
-                    <form>
+                    <form method="POST" action="#">
+                        @csrf
                         <div class="mb-3">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" placeholder="Your full name">
+                            <label class="form-label" for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your full name" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" placeholder="Your email address">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Your email address" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Message</label>
-                            <textarea class="form-control" rows="5" placeholder="Your message..."></textarea>
+                            <label class="form-label" for="message">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
                         </div>
                         <div class="d-flex justify-content-start">
-                                <a href="#" class="btn text-white button btn-black border-0">
-                                    <span>{{ $isArabic === 'ar' ? 'Submit' : 'Submit' }}</span>
-                                </a>
+                            <button type="submit" class="btn text-white button btn-black border-0">
+                                <span>{{ $isArabic === 'ar' ? 'إرسال' : 'Submit' }}</span>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
+        <!-- Contact Image -->
         <div class="col-lg-6 p-0">
             <img src="{{ asset('images/contact.webp') }}" alt="Company Logo" class="img-fluid w-100 h-100" style="object-fit: cover; border-radius: 0 0.5rem 0.5rem 0;">
         </div>

@@ -1,4 +1,5 @@
 @extends('front.layouts.app')
+
 @section('content')
 @include('components.global-slider', ['pageTitle' => __('Gallery')])
 
@@ -65,4 +66,3 @@
     });
 </script>
 @endsection
-
