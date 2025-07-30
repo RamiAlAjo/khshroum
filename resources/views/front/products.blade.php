@@ -23,10 +23,10 @@
                             </li>
 
                             <!-- Product Filter Links -->
-                            @foreach ($products as $product)
+                          @foreach ($categories as $category)
                                 <li class="mb-3">
-                                    <a class="{{ request()->routeIs('product.show', $product->id) ? 'active' : '' }}" href="{{ route('product.show', $product->id) }}">
-                                        {{ $isArabic ? $product->name_ar : $product->name_en }}
+                                    <a class="{{ request('category_id') == $category->id ? 'active' : '' }}" href="{{ route('product.index', ['category_id' => $category->id]) }}">
+                                        {{ $isArabic ? $category->name_ar : $category->name_en }}
                                     </a>
                                 </li>
                             @endforeach

@@ -6,7 +6,7 @@
         <div class="card mb-3">
             <div class="card-body">
 
-                <h5 class="card-title">Add New Product</h5>
+                <h5 class="card-title">Add New Product Category</h5>
 
                 <!-- Display Validation Errors -->
                 @if ($errors->any())
@@ -19,7 +19,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.product-categories.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Tabs -->
@@ -36,7 +36,7 @@
                         <!-- English Tab -->
                         <div class="tab-pane fade show active" id="en" role="tabpanel" aria-labelledby="en-tab">
                             <div class="mb-3">
-                                <label for="name_en" class="form-label">Product Name (EN)</label>
+                                <label for="name_en" class="form-label">Category Name (EN)</label>
                                 <input type="text" class="form-control" name="name_en" value="{{ old('name_en') }}" required>
                             </div>
 
@@ -49,7 +49,7 @@
                         <!-- Arabic Tab -->
                         <div class="tab-pane fade" id="ar" role="tabpanel" aria-labelledby="ar-tab">
                             <div class="mb-3">
-                                <label for="name_ar" class="form-label">Product Name (AR)</label>
+                                <label for="name_ar" class="form-label">Category Name (AR)</label>
                                 <input type="text" class="form-control" name="name_ar" value="{{ old('name_ar') }}" required>
                             </div>
 
@@ -62,37 +62,9 @@
 
                     <!-- Image Upload -->
                     <div class="mb-3">
-                        <label for="image" class="form-label">Product Image</label>
+                        <label for="image" class="form-label">Category Image</label>
                         <input type="file" class="form-control" name="image" accept="image/*">
                     </div>
-
-                    <div class="form-group">
-                        <label for="pdf">Upload PDF</label>
-                        <input type="file" name="pdf" id="pdf" class="form-control shadow-sm" accept="application/pdf">
-                        @error('pdf')
-                            <div class="alert alert-danger mt-2">{{ $message }}</div>
-                        @enderror
-
-                        @if(isset($product) && $product->pdf)
-                            <p class="mt-2">
-                                <a href="{{ asset('storage/' . $product->pdf) }}" target="_blank">Download existing PDF</a>
-                            </p>
-                        @endif
-                    </div>
-
-                    <!-- Category -->
-                    <div class="mb-3">
-                        <label for="category_id" class="form-label">Category</label>
-                        <select class="form-control" name="category_id" required>
-                            <option value="">-- Select Category --</option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name_en }}
-                            </option>
-                        @endforeach
-                        </select>
-                    </div>
-
 
                     <!-- Status -->
                     <div class="mb-3">
@@ -111,8 +83,8 @@
                     </div>
 
                     <div class="text-end">
-                        <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Create Product</button>
+                        <a href="{{ route('admin.product-categories.index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create Category</button>
                     </div>
                 </form>
 

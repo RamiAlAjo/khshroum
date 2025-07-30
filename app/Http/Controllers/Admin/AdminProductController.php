@@ -12,46 +12,52 @@ use Illuminate\Support\Str;
 
 class AdminProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::latest()->get();
-        return view('admin.products.index', compact('products'));
-    }
+   public function index()
+{
+    $products = Product::latest()->get();
+    $categories = ProductCategory::all(); // Fetch all categories
+    return view('admin.products.index', compact('products', 'categories')); // Pass the categories variable
+}
 
-    public function create()
-    {
-        return view('admin.products.create');
-    }
+public function create()
+{
+    $categories = ProductCategory::all(); // Fetch all categories
+    return view('admin.products.create', compact('categories')); // Pass categories to the view
+}
+
+
 
 
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'description_en' => 'nullable|string',
-            'description_ar' => 'nullable|string',
-            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
-            'pdf' => 'nullable|mimes:pdf|max:10240',
-            'slug' => 'required|string|unique:products,slug',
-            'status' => 'required|in:active,inactive,pending',
-        ]);
+{
+    $validated = $request->validate([
+        'name_en' => 'required|string|max:255',
+        'name_ar' => 'required|string|max:255',
+        'description_en' => 'nullable|string',
+        'description_ar' => 'nullable|string',
+        'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+        'pdf' => 'nullable|mimes:pdf|max:10240',
+        'slug' => 'required|string|unique:products,slug',
+        'status' => 'required|in:active,inactive,pending',
+        'category_id' => 'required|exists:product_categories,id', // Add validation for category_id
+    ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products/images', 'public');
-        }
-
-        if ($request->hasFile('pdf')) {
-            $validated['pdf'] = $request->file('pdf')->store('pdfs', 'public');
-        } else {
-            $validated['imapdfge'] = $product->pdf ?? null;
-        }
-
-
-        Product::create($validated);
-
-        return redirect()->route('admin.products.index')->with('status-success', 'Product created successfully!');
+    // Handle image file upload
+    if ($request->hasFile('image')) {
+        $validated['image'] = $request->file('image')->store('products/images', 'public');
     }
+
+    // Handle PDF file upload
+    if ($request->hasFile('pdf')) {
+        $validated['pdf'] = $request->file('pdf')->store('pdfs', 'public');
+    }
+
+    // Create the product with all validated data
+    Product::create($validated);
+
+    return redirect()->route('admin.products.index')->with('status-success', 'Product created successfully!');
+}
+
 
     public function edit($id)
     {

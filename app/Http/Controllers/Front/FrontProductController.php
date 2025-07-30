@@ -4,14 +4,28 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Banner;
+use App\Models\ProductCategory; // Add this import
+use Illuminate\Http\Request;
 
 class FrontProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where('status', 'active')->latest()->get();
-        return view('front.products', compact('products'));
+        // Get the selected category ID from the request, if any
+        $categoryId = $request->input('category_id');
+
+        // Fetch products either based on the selected category or all products
+        $products = Product::when($categoryId, function ($query) use ($categoryId) {
+            return $query->where('category_id', $categoryId);
+        })
+        ->where('status', 'active')
+        ->latest()
+        ->paginate(12); // Paginate products
+
+        // Fetch all categories
+        $categories = ProductCategory::all();
+
+        return view('front.products', compact('products', 'categories'));
     }
 
     public function show(Product $product)
@@ -19,5 +33,4 @@ class FrontProductController extends Controller
         $isArabic = app()->getLocale() === 'ar';
         return view('front.products_show', compact('isArabic', 'product'));
     }
-
 }

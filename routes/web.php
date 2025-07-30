@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\AdminPhotoGalleryController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\LinksController;
+use App\Http\Controllers\Admin\AdminProductCategoriesController;
 use App\Http\Middleware\SetLocale;
 
 Route::middleware(['web', SetLocale::class])->group(function () {
@@ -59,6 +60,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('/photo-album', AdminPhotoAlbumController::class);
     Route::resource('/photos', AdminPhotoGalleryController::class);
     Route::resource('/videos', VideoController::class);
+    Route::resource('/product-categories', AdminProductCategoriesController::class);
 
  });
 

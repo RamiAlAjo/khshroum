@@ -37,4 +37,12 @@ class Product extends Model
         'updated_at' => 'datetime',
     ];
 
+    // In the Product model
+
+public function category()
+{
+    return $this->belongsTo(ProductCategory::class, 'category_id'); // 'category_id' is the foreign key
+}
+
+
 }
