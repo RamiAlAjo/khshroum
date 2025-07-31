@@ -76,19 +76,34 @@
                     </ul>
                 </li>
 
-                <!-- Products -->
-                <li class="has-sub">
-                    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Products" aria-expanded="false" aria-controls="Products">
-                        <span class="material-icons">shopping_cart</span>
-                        <span class="nav-text">Products</span>
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="collapse sub-menu" id="Products">
-                        <!-- Products -->
-                        <li><a class="sidenav-item-link" href="{{ route('admin.products.index') }}"><span class="nav-text">Products List</span></a></li>
-                        <li><a class="sidenav-item-link" href="{{ route('admin.products.create') }}"><span class="nav-text">Create Product</span></a></li>
-                    </ul>
-                </li>
+             <!-- Products -->
+<li class="has-sub">
+    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Products" aria-expanded="false" aria-controls="Products">
+        <span class="material-icons">shopping_cart</span>
+        <span class="nav-text">Products</span>
+        <b class="caret"></b>
+    </a>
+    <ul class="collapse sub-menu" id="Products">
+        <!-- Products List -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.products.index') }}"><span class="nav-text">Products List</span></a></li>
+        <!-- Create Product -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.products.create') }}"><span class="nav-text">Create Product</span></a></li>
+    </ul>
+
+    <!-- Product Categories -->
+    <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#Categories" aria-expanded="false" aria-controls="Categories">
+        <span class="material-icons">category</span>
+        <span class="nav-text">Product Categories</span>
+        <b class="caret"></b>
+    </a>
+    <ul class="collapse sub-menu" id="Categories">
+        <!-- Categories List -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.product-categories.index') }}"><span class="nav-text">Categories List</span></a></li>
+        <!-- Create Category -->
+        <li><a class="sidenav-item-link" href="{{ route('admin.product-categories.create') }}"><span class="nav-text">Create Category</span></a></li>
+    </ul>
+</li>
+
 
 
                 <!-- Services -->

@@ -57,7 +57,7 @@
 
                     <div class="mb-3">
                         <label for="key_words" class="form-label">Meta Keywords</label>
-                        <textarea class="form-control" name="key_words" id="key_words" rows="3">{{ $settings->key_words ?? '' }}</textarea>
+                        <textarea class="form-control text-editor-desc" name="key_words" id="key_words" rows="3">{{ $settings->key_words ?? '' }}</textarea>
                     </div>
 
                     <div class="mb-3">

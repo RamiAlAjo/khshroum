@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group mt-3">
                                 <label for="about_us_description_en">Description (English)</label>
-                                <textarea class="form-control shadow-sm" name="about_us_description_en" id="about_us_description_en" rows="5">{{ old('about_us_description_en', $about->about_us_description_en) }}</textarea>
+                                <textarea class="form-control shadow-sm text-editor-desc" name="about_us_description_en" id="about_us_description_en" rows="5">{{ old('about_us_description_en', $about->about_us_description_en) }}</textarea>
                                 @error('about_us_description_en')
                                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                                 @enderror
@@ -54,7 +54,7 @@
                             </div>
                             <div class="form-group mt-3">
                                 <label for="about_us_description_ar" class="float-end">الوصف (Arabic)</label>
-                                <textarea class="form-control shadow-sm text-end" name="about_us_description_ar" id="about_us_description_ar" rows="5">{{ old('about_us_description_ar', $about->about_us_description_ar) }}</textarea>
+                                <textarea class="form-control shadow-sm text-end text-editor-desc" name="about_us_description_ar" id="about_us_description_ar" rows="5">{{ old('about_us_description_ar', $about->about_us_description_ar) }}</textarea>
                                 @error('about_us_description_ar')
                                     <div class="alert alert-danger mt-2 text-end">{{ $message }}</div>
                                 @enderror

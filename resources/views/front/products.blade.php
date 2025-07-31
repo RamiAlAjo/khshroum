@@ -3,6 +3,16 @@
 @section('content')
 @include('components.global-slider', ['pageTitle' => __('Products')])
 
+<style>
+.product-name {
+    text-decoration: none !important;
+}
+.arrow-link {
+    text-decoration: none !important;
+}
+
+
+</style>
 @php
     $isArabic = app()->getLocale() === 'ar'; // Check if current locale is Arabic
 @endphp
@@ -42,15 +52,24 @@
                         <div class="col-md-6 col-lg-4 text-center product-item">
                             <a href="{{ route('product.show', $product->id) }}">
                                 <div class="card product-card shadow-sm">
-                                    <img class="square-img rounded" src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}" alt="{{ $isArabic ? $product->name_ar : $product->name_en }}" />
-                                    <div class="container mt-3">
-                                        <h5 class="product-name">{{ $isArabic ? $product->name_ar : $product->name_en }}</h5>
-                                        <p class="product-description">{{ Str::limit($product->description, 100) }}</p>
-                                    </div>
-                                    <a href="{{ route('product.show', $product->id) }}" class="arrow-link">
-                                        <i class="fas fa-arrow-right fa-lg"></i>
-                                    </a>
-                                </div>
+    <img class="square-img rounded"
+         src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
+         alt="{{ $isArabic ? $product->name_ar : $product->name_en }}" />
+
+    <div class="container mt-3">
+        <a href="{{ route('product.show', $product->id) }}" style="text-decoration: none;">
+            <h5 class="product-name">{{ $isArabic ? $product->name_ar : $product->name_en }}</h5>
+        </a>
+        <p class="product-description">{{ Str::limit($product->description, 100) }}</p>
+    </div>
+
+    <div>
+        <a href="{{ route('product.show', $product->id) }}" class="arrow-link">
+            <i class="fas fa-arrow-{{ $isArabic ? 'left' : 'right' }} fa-lg"></i>
+        </a>
+    </div>
+</div>
+
                             </a>
                         </div>
                     @empty

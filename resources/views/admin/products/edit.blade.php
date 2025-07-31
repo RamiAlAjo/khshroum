@@ -43,7 +43,7 @@
 
                             <div class="mb-3">
                                 <label for="description_en" class="form-label">Description (EN)</label>
-                                <textarea class="form-control" name="description_en" rows="4">{{ old('description_en', $product->description_en) }}</textarea>
+                                <textarea class="form-control text-editor-desc" name="description_en" rows="4">{{ old('description_en', $product->description_en) }}</textarea>
                             </div>
                         </div>
 
@@ -56,7 +56,7 @@
 
                             <div class="mb-3">
                                 <label for="description_ar" class="form-label">Description (AR)</label>
-                                <textarea class="form-control" name="description_ar" rows="4">{{ old('description_ar', $product->description_ar) }}</textarea>
+                                <textarea class="form-controlc text-editor-desc" name="description_ar" rows="4">{{ old('description_ar', $product->description_ar) }}</textarea>
                             </div>
                         </div>
                     </div>
