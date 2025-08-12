@@ -27,7 +27,7 @@ class AdminPhotoGalleryController extends Controller
     {
         $request->validate([
             'album_id' => 'required|exists:photo_album,id',
-            'album_images.*' => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'album_images.*' => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:100000',
         ]);
 
         if ($request->hasFile('album_images')) {
@@ -58,7 +58,7 @@ class AdminPhotoGalleryController extends Controller
 
         $request->validate([
             'album_id' => 'required|exists:photo_album,id',
-            'album_images' =>  'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'album_images' =>  'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:100000',
         ]);
 
         $path = $photo->album_images;

@@ -7,7 +7,7 @@
                 <h5 class="card-title pt-2">Videos List</h5>
             </div>
             <div class="col-md-6 text-right">
-                <a href="{{ route('admin.photo-album.create') }}" class="btn btn-primary">Add Video</a>
+                <a href="{{ route('admin.videos.create') }}" class="btn btn-primary">Add Video</a>
             </div>
         </div>
 

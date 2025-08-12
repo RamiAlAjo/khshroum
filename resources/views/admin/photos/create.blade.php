@@ -15,6 +15,13 @@
                     </div>
                 </div>
 
+                <!-- Success Message -->
+                @if (session('status-success'))
+                    <div class="alert alert-success">
+                        {{ session('status-success') }}
+                    </div>
+                @endif
+
                 <!-- Validation Errors -->
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -26,6 +33,7 @@
                     </div>
                 @endif
 
+                <!-- Form -->
                 <form action="{{ route('admin.photos.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
@@ -43,8 +51,11 @@
 
                     <div class="form-group mb-3">
                         <label for="album_images">Upload Photos</label>
-                        <input type="file" class="form-control" id="album_images" name="album_images[]" multiple accept="image/*" required>
-                        <small class="form-text text-muted">You can select multiple images.</small>
+                        <input type="file" class="form-control" id="album_images" name="album_images[]" multiple accept="image/*" required onchange="previewImages()">
+                        <small class="form-text text-muted">You can select multiple images (Max size: 10MB per file).</small>
+
+                        <!-- Preview Images -->
+                        <div id="image_preview" style="margin-top: 10px;"></div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Upload Photos</button>
@@ -54,4 +65,40 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Function to Preview Images Before Upload
+    function previewImages() {
+        const preview = document.getElementById('image_preview');
+        preview.innerHTML = ''; // Clear any previous previews
+
+        const files = document.getElementById('album_images').files;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100px'; // Set a max width for the preview
+                img.style.margin = '5px';
+                preview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Optional: Client-side validation for file size (10MB max per file)
+    document.getElementById('album_images').addEventListener('change', function() {
+        const files = this.files;
+        for (let i = 0; i < files.length; i++) {
+            if (files[i].size > 10 * 1024 * 1024) { // 10MB
+                alert('File size exceeds the limit of 10MB');
+                this.value = ''; // Clear the file input
+                return;
+            }
+        }
+    });
+</script>
+
 @endsection

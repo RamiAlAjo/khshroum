@@ -22,4 +22,9 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # Increase upload and post size limits
+    php_value upload_max_filesize 500M
+    php_value post_max_size 500M
+    php_value max_input_vars 3000
 </IfModule>

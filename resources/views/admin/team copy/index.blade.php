@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-
+<div class="row">
     <div class="col-xl-12">
         <div class="card mb-3">
             <div class="row no-gutters">
@@ -93,11 +93,13 @@
                                                     <td>{{ $member->name_ar }}</td>
                                                     <td>
                                                         <a class="btn btn-sm btn-info" href="{{ route('admin.team.edit', $member->id) }}">Edit</a>
-                                                       <form action="{{ route('admin.team.destroy', $member->id) }}" method="POST" style="display:inline;">
-                                                           @csrf
-                                                           @method('DELETE')
-                                                           <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                                       </form>
+                                                    <form action="{{ route('admin.team.destroy', $member->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+</form>
+
+
                                                     </td>
                                                 </tr>
                                             @empty
@@ -109,12 +111,12 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
 
-                        </div> <!-- End of tab-content -->
-                    </div> <!-- End of card-body -->
-                </div> <!-- End of col-md-12 -->
-            </div> <!-- End of row no-gutters -->
-        </div> <!-- End of card mb-3 -->
-    </div> <!-- End of col-xl-12 -->
-
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

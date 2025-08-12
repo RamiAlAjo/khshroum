@@ -85,7 +85,7 @@
                                     {{ app()->getLocale() === 'ar' ? $product->name_ar : $product->name_en }}
                                 </h3>
                                 <p class="text-muted text-truncate mb-3">
-                                    {{ Str::limit($product->description, 120) }}
+                                    {!! Str::limit($product->description, 120) !!}
                                 </p>
                                 <div class="d-flex justify-content-start">
                                     @if($product->pdf && Storage::disk('public')->exists($product->pdf))

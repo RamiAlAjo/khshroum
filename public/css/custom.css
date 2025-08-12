@@ -418,6 +418,7 @@ footer ol {
     }
     #main-header img {
         width: 120px;
+        height: 25px;
     }
     #burgerBtn svg {
         width: 36px;

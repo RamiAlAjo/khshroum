@@ -18,7 +18,7 @@
         <div class="col-12 col-md-7 text-start mb-4 mb-md-0">
         <h2 class="fw-bold mb-3">{{ $name ?? __('Product Name') }}</h2>
 <div class="mb-4 mb-md-5">{!! $description ?? __('No description available.') !!}</div>
-
+            
             <div class="d-flex justify-content-start">
                 @if($product->pdf && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->pdf))
                     <a href="{{ asset('storage/' . $product->pdf) }}"
