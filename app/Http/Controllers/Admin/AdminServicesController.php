@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File; // For file operations
 
 class AdminServicesController extends Controller
 {
@@ -49,18 +50,30 @@ class AdminServicesController extends Controller
         $service->description_ar = $request->description_ar;
         $service->status = $request->status;
 
+        // Handle image file upload
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('services/images', 'public');
-            $service->image = $path;
-        }
-        if ($request->hasFile('icon')) {
-            $path = $request->file('icon')->store('services/icon', 'public');
-            $service->icon = $path;
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $imagePath = 'uploads/services/images/' . $imageName;
+            $request->file('image')->move(public_path('uploads/services/images'), $imageName);
+            $service->image = $imagePath;
         }
 
-        if ($request->hasFile('pdf')) {
-            $service->pdf = $request->file('pdf')->store('pdfs', 'public');
+        // Handle icon file upload
+        if ($request->hasFile('icon')) {
+            $iconName = time() . '-' . $request->file('icon')->getClientOriginalName();
+            $iconPath = 'uploads/services/icon/' . $iconName;
+            $request->file('icon')->move(public_path('uploads/services/icon'), $iconName);
+            $service->icon = $iconPath;
         }
+
+        // Handle PDF file upload
+        if ($request->hasFile('pdf')) {
+            $pdfName = time() . '-' . $request->file('pdf')->getClientOriginalName();
+            $pdfPath = 'uploads/pdfs/' . $pdfName;
+            $request->file('pdf')->move(public_path('uploads/pdfs'), $pdfName);
+            $service->pdf = $pdfPath;
+        }
+
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
         $service->save();
 
@@ -86,7 +99,7 @@ class AdminServicesController extends Controller
             'description_en' => 'nullable|string',
             'description_ar' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
-            'pdf' => 'nullable|file|mimes:pdf|max:10240',
+            'pdf' => 'nullable|mimes:pdf|max:10240',
             'icon'  => 'nullable|image|max:2048',
             'status' => 'required|in:active,inactive,pending',
         ]);
@@ -97,30 +110,51 @@ class AdminServicesController extends Controller
         $service->description_ar = $request->description_ar;
         $service->status = $request->status;
 
+        // Handle image file upload
         if ($request->hasFile('image')) {
             if ($service->image) {
-                \Storage::delete('public/' . $service->image);
-            }
-            $path = $request->file('image')->store('services/images', 'public');
-            $service->image = $path;
-        }
-        if ($request->hasFile('icon')) {
-            if ($service->image) {
-                \Storage::delete('public/' . $service->icon);
-            }
-            $path = $request->file('icon')->store('services/icon', 'public');
-            $service->icon = $path;
-        }
-        if ($request->hasFile('pdf')) {
-            // Delete the old resume if it exists
-            if ($service->pdf) {
-                \Storage::delete('public/' . $service->pdf);
+                $oldImagePath = public_path($service->image);
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath); // Delete old image
+                }
             }
 
-            // Store the new resume
-            $resumePath = $request->file('pdf')->store('service/pdfs', 'public');
-            $service->pdf = $resumePath;
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $imagePath = 'uploads/services/images/' . $imageName;
+            $request->file('image')->move(public_path('uploads/services/images'), $imageName);
+            $service->image = $imagePath;
         }
+
+        // Handle icon file upload
+        if ($request->hasFile('icon')) {
+            if ($service->icon) {
+                $oldIconPath = public_path($service->icon);
+                if (File::exists($oldIconPath)) {
+                    File::delete($oldIconPath); // Delete old icon
+                }
+            }
+
+            $iconName = time() . '-' . $request->file('icon')->getClientOriginalName();
+            $iconPath = 'uploads/services/icon/' . $iconName;
+            $request->file('icon')->move(public_path('uploads/services/icon'), $iconName);
+            $service->icon = $iconPath;
+        }
+
+        // Handle PDF file upload
+        if ($request->hasFile('pdf')) {
+            if ($service->pdf) {
+                $oldPdfPath = public_path('uploads/pdfs/' . $service->pdf);
+                if (File::exists($oldPdfPath)) {
+                    File::delete($oldPdfPath); // Delete old PDF
+                }
+            }
+
+            $pdfName = time() . '-' . $request->file('pdf')->getClientOriginalName();
+            $pdfPath = 'uploads/pdfs/' . $pdfName;
+            $request->file('pdf')->move(public_path('uploads/pdfs'), $pdfName);
+            $service->pdf = $pdfPath;
+        }
+
         $service->slug = Str::slug($request->name_en) . '-' . Str::random(5);
         $service->save();
 
@@ -132,10 +166,29 @@ class AdminServicesController extends Controller
      */
     public function destroy(Service $service)
     {
+        // Delete files if they exist
         if ($service->image) {
-            \Storage::delete('public/' . $service->image);
+            $oldImagePath = public_path($service->image);
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath); // Delete image
+            }
         }
 
+        if ($service->icon) {
+            $oldIconPath = public_path($service->icon);
+            if (File::exists($oldIconPath)) {
+                File::delete($oldIconPath); // Delete icon
+            }
+        }
+
+        if ($service->pdf) {
+            $oldPdfPath = public_path('uploads/pdfs/' . $service->pdf);
+            if (File::exists($oldPdfPath)) {
+                File::delete($oldPdfPath); // Delete PDF
+            }
+        }
+
+        // Delete the service
         $service->delete();
 
         return redirect()->route('admin.services.index')->with('status-success', 'Service deleted successfully!');

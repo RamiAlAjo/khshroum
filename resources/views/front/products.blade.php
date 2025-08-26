@@ -53,7 +53,7 @@
                             <a href="{{ route('product.show', $product->id) }}">
                                 <div class="card product-card shadow-sm">
     <img class="square-img rounded"
-         src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/placeholder.png') }}"
+         src="{{ $product->image ? asset('/' . $product->image) : asset('images/placeholder.png') }}"
          alt="{{ $isArabic ? $product->name_ar : $product->name_en }}" />
 
     <div class="container mt-3">

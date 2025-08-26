@@ -48,7 +48,7 @@
         @foreach($albums as $album)
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
                 <a href="{{ route('album.show', $album->id) }}" class="text-decoration-none text-center w-100">
-                    <img src="{{ asset('storage/' . $album->album_cover) }}"
+                    <img src="{{ asset('/' . $album->album_cover) }}"
                          alt="{{ $isArabic ? $album->album_title_ar : $album->album_title_en }}"
                          class="gallery-thumb w-100 rounded">
                     <h4 class="mt-3 fw-bold gallery-title">

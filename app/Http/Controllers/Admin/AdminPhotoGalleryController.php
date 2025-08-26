@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // For file operations
 use App\Models\PhotoAlbum;
 use App\Models\PhotoGallery;
 
@@ -13,30 +12,36 @@ class AdminPhotoGalleryController extends Controller
 {
     public function index()
     {
-        $albums = PhotoAlbum::with('photos')->get(); // eager load related photos
+        // Eager load related photos
+        $albums = PhotoAlbum::with('photos')->get();
         return view('admin.photos.index', compact('albums'));
     }
 
     public function create()
     {
-        $albums = PhotoAlbum::all();
+        $albums = PhotoAlbum::all(); // Get all albums
         return view('admin.photos.create', compact('albums'));
     }
 
     public function store(Request $request)
     {
+        // Validate request data
         $request->validate([
             'album_id' => 'required|exists:photo_album,id',
             'album_images.*' => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:100000',
         ]);
 
+        // Check if album images are uploaded
         if ($request->hasFile('album_images')) {
             foreach ($request->file('album_images') as $image) {
-                $path = $image->store('photos_gallery', 'public');
+                // Manually handle file storage to public/uploads/photos_gallery/
+                $imageName = time() . '-' . $image->getClientOriginalName();
+                $image->move(public_path('uploads/photos_gallery'), $imageName); // Move image to public folder
 
+                // Save image path in database
                 PhotoGallery::create([
                     'album_id' => $request->album_id,
-                    'album_images' => $path,
+                    'album_images' => 'uploads/photos_gallery/' . $imageName, // Store the relative path
                 ]);
             }
         }
@@ -46,33 +51,43 @@ class AdminPhotoGalleryController extends Controller
 
     public function edit($id)
     {
-        $photo = PhotoGallery::findOrFail($id);
-        $albums = PhotoAlbum::all();
+        $photo = PhotoGallery::findOrFail($id); // Fetch the photo by ID
+        $albums = PhotoAlbum::all(); // Get all albums
 
         return view('admin.photos.edit', compact('photo', 'albums'));
     }
 
     public function update(Request $request, $id)
     {
-        $photo = PhotoGallery::findOrFail($id);
+        $photo = PhotoGallery::findOrFail($id); // Fetch the photo by ID
 
+        // Validate request data
         $request->validate([
             'album_id' => 'required|exists:photo_album,id',
             'album_images' =>  'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:100000',
         ]);
 
+        // Keep the current image path if no new image is uploaded
         $path = $photo->album_images;
 
+        // Handle new image upload if file is provided
         if ($request->hasFile('album_images')) {
-            // Delete old image if exists
-            if ($path && Storage::disk('public')->exists($path)) {
-                Storage::disk('public')->delete($path);
+            // Delete the old image if it exists
+            $oldImagePath = public_path($path);
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath); // Delete the old image
             }
 
-            // Store new image
-            $path = $request->file('album_images')->store('photos_gallery', 'public');
+            // Store the new image in the public/uploads/photos_gallery/ directory
+            $image = $request->file('album_images');
+            $imageName = time() . '-' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/photos_gallery'), $imageName); // Move the image
+
+            // Update path in the database
+            $path = 'uploads/photos_gallery/' . $imageName;
         }
 
+        // Update the database record
         $photo->update([
             'album_id' => $request->album_id,
             'album_images' => $path,
@@ -83,14 +98,14 @@ class AdminPhotoGalleryController extends Controller
 
     public function destroy($id)
     {
-        $photo = PhotoGallery::findOrFail($id);
+        $photo = PhotoGallery::findOrFail($id); // Fetch the photo by ID
 
-        // Delete the image file from storage
-        if ($photo->album_images && Storage::disk('public')->exists($photo->album_images)) {
-            Storage::disk('public')->delete($photo->album_images);
+        // Delete the image file from the public folder
+        if ($photo->album_images && File::exists(public_path($photo->album_images))) {
+            File::delete(public_path($photo->album_images)); // Delete the image
         }
 
-        // Delete the record from the database
+        // Delete the photo record from the database
         $photo->delete();
 
         return redirect()->route('admin.photos.index')->with('status-success', 'Photo deleted successfully.');

@@ -43,7 +43,7 @@
                     <!-- Service Icon -->
                     <div class="d-flex justify-content-center">
                         <img
-                            src="{{ asset('storage/'.$service['icon']) }}"
+                            src="{{ asset('/'.$service['icon']) }}"
                             alt="Service Icon"
                             class="img-fluid rounded-circle"
                             style="width: 80px; height: 80px; object-fit: cover;"
@@ -89,7 +89,7 @@
                                 </p>
                                 <div class="d-flex justify-content-start">
                                     @if($product->pdf && Storage::disk('public')->exists($product->pdf))
-                                        <a href="{{ asset('storage/' . $product->pdf) }}" class="btn btn-sm btn-black text-white">
+                                        <a href="{{ asset('/' . $product->pdf) }}" class="btn btn-sm btn-black text-white">
                                             {{ __('download_pdf') }}
                                         </a>
                                     @else
@@ -102,7 +102,7 @@
 
                             <!-- Product Image -->
                             <div class="image-container text-center">
-                                <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $product->name }}" class="img-fluid rounded">
+                                <img src="{{ asset('/'.$product->image) }}" alt="{{ $product->name }}" class="img-fluid rounded">
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
             @forelse ($clients as $client)
                 <div class="col-6 col-sm-4 col-md-3 col-lg-2 text-center">
                     <a href="{{ $client->url ?? '#' }}" target="_blank" rel="noopener noreferrer">
-                        <img src="{{ asset('storage/' . $client->image) }}"
+                        <img src="{{ asset('/' . $client->image) }}"
                              alt="Client Logo"
                              class="img-fluid shadow-sm square-img bordered-container" />
                     </a>

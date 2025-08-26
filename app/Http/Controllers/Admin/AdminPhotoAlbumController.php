@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
-use App\Models\PhotoGallery;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\PhotoAlbum;
-use App\Models\PhotosGallery;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File; // For file operations
 
 class AdminPhotoAlbumController extends Controller
 {
@@ -32,16 +32,21 @@ class AdminPhotoAlbumController extends Controller
             'album_cover' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
+        // Handle file upload and store manually in public/uploads/
         $coverPath = null;
 
         if ($request->hasFile('album_cover')) {
-            $coverPath = $request->file('album_cover')->store('album_covers', 'public');
+            // Manually move the file to the uploads/ folder inside the public directory
+            $file = $request->file('album_cover');
+            $coverPath = 'uploads/album_covers/' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/album_covers'), $coverPath); // Move the file
         }
 
+        // Create the album
         PhotoAlbum::create([
             'album_title_en' => $request->album_title_en,
             'album_title_ar' => $request->album_title_ar,
-            'album_cover'    => $coverPath,
+            'album_cover'    => $coverPath, // Store file path
         ]);
 
         return redirect()->route('admin.photo-album.index')->with('status-success', 'Photo album created successfully.');
@@ -63,18 +68,23 @@ class AdminPhotoAlbumController extends Controller
             'album_cover' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
+        // Keep the current cover image if no new image is uploaded
         $coverPath = $album->album_cover;
 
         if ($request->hasFile('album_cover')) {
-            // Delete old cover image if exists
-            if ($coverPath && Storage::disk('public')->exists($coverPath)) {
-                Storage::disk('public')->delete($coverPath);
+            // Delete old cover image if it exists
+            $oldCoverPath = public_path($coverPath);
+            if (File::exists($oldCoverPath)) {
+                File::delete($oldCoverPath); // Delete the old image manually
             }
 
-            // Store new image
-            $coverPath = $request->file('album_cover')->store('album_covers', 'public');
+            // Move the new cover image to uploads/album_covers/
+            $file = $request->file('album_cover');
+            $coverPath = 'uploads/album_covers/' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/album_covers'), $coverPath); // Move the file
         }
 
+        // Update the album record
         $album->update([
             'album_title_en' => $request->album_title_en,
             'album_title_ar' => $request->album_title_ar,
@@ -88,12 +98,13 @@ class AdminPhotoAlbumController extends Controller
     {
         $album = PhotoAlbum::findOrFail($id);
 
-        // Delete album cover image if it exists
-        if ($album->album_cover && Storage::disk('public')->exists($album->album_cover)) {
-            Storage::disk('public')->delete($album->album_cover);
+        // Delete album cover image manually if it exists
+        $coverPath = public_path($album->album_cover);
+        if (File::exists($coverPath)) {
+            File::delete($coverPath); // Delete the image
         }
 
-        // Delete the album
+        // Delete the album from the database
         $album->delete();
 
         return redirect()->route('admin.photo-album.index')->with('status-success', 'Photo album deleted successfully.');

@@ -4,33 +4,53 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Models\TeamMember;
 
 class TeamMemberController extends Controller
 {
+    /**
+     * Display a listing of the team members.
+     */
     public function index()
     {
-        // Retrieve all team members
         $teamMembers = TeamMember::all();
         return view('admin.team.index', compact('teamMembers'));
     }
 
+    /**
+     * Show the form for creating a new team member.
+     */
     public function create()
     {
         return view('admin.team.create');
     }
 
+    /**
+     * Store a newly created team member in storage.
+     */
     public function store(Request $request)
     {
+        // Validate incoming data
         $data = $request->validate([
             'name_en' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
-        // Store the image in the 'team' folder
-        $data['image'] = $request->file('image')->store('team', 'public');
+        // Ensure the 'uploads/team' directory exists
+        $imageDirectory = public_path('uploads/team');
+        if (!File::exists($imageDirectory)) {
+            File::makeDirectory($imageDirectory, 0755, true);  // Creates the directory if it doesn't exist
+        }
+
+        // Store the image in the 'uploads/team' directory
+        $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+        $imagePath = 'uploads/team/' . $imageName;
+        $request->file('image')->move($imageDirectory, $imageName);
+
+        // Add image path to the data
+        $data['image'] = $imagePath;
 
         // Create a new team member entry
         TeamMember::create($data);
@@ -39,6 +59,9 @@ class TeamMemberController extends Controller
         return redirect()->route('admin.team.index')->with('success', 'Team Member created successfully.');
     }
 
+    /**
+     * Show the form for editing the specified team member.
+     */
     public function edit($id)
     {
         // Find the team member by ID
@@ -46,6 +69,9 @@ class TeamMemberController extends Controller
         return view('admin.team.edit', compact('teamMember'));
     }
 
+    /**
+     * Update the specified team member in storage.
+     */
     public function update(Request $request, $id)
     {
         // Find the team member by ID
@@ -60,15 +86,25 @@ class TeamMemberController extends Controller
 
         // If a new image is uploaded
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($teamMember->image && Storage::disk('public')->exists($teamMember->image)) {
-                Storage::disk('public')->delete($teamMember->image);
+            // Ensure the 'uploads/team' directory exists
+            $imageDirectory = public_path('uploads/team');
+            if (!File::exists($imageDirectory)) {
+                File::makeDirectory($imageDirectory, 0755, true);  // Creates the directory if it doesn't exist
             }
 
-            // Store the new image
-            $data['image'] = $request->file('image')->store('team', 'public');
+            // Delete old image if it exists
+            if ($teamMember->image && File::exists(public_path($teamMember->image))) {
+                File::delete(public_path($teamMember->image)); // Delete old image
+            }
+
+            // Store the new image in the 'uploads/team' directory
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $imagePath = 'uploads/team/' . $imageName;
+            $request->file('image')->move($imageDirectory, $imageName);
+
+            $data['image'] = $imagePath;
         } else {
-            // Keep the old image if no new one is uploaded
+            // Keep old image if no new one is uploaded
             $data['image'] = $teamMember->image;
         }
 
@@ -79,14 +115,17 @@ class TeamMemberController extends Controller
         return redirect()->route('admin.team.index')->with('success', 'Team Member updated successfully.');
     }
 
+    /**
+     * Remove the specified team member from storage.
+     */
     public function destroy($id)
     {
         // Find the team member by ID
         $teamMember = TeamMember::findOrFail($id);
 
         // Delete the image file from storage if it exists
-        if ($teamMember->image && Storage::disk('public')->exists($teamMember->image)) {
-            Storage::disk('public')->delete($teamMember->image);
+        if ($teamMember->image && File::exists(public_path($teamMember->image))) {
+            File::delete(public_path($teamMember->image)); // Delete image
         }
 
         // Delete the team member

@@ -38,7 +38,7 @@
                             <!-- Image -->
                             <div class="col-md-4 mb-3 mb-md-0 text-center">
                                 <a href="{{ route('services.show', $service->id) }}">
-                                    <img src="{{ asset('storage/' . $service->image) }}"
+                                    <img src="{{ asset('/' . $service->image) }}"
                                          alt="{{ $name }}"
                                          class="img-fluid rounded w-100"
                                          style="max-height: 250px; object-fit: cover;">
@@ -47,12 +47,12 @@
 
                             <!-- Text -->
                             <div class="col-md-8">
-                                <h3 class="fw-bold mb-3">{{ $name }}</h3>
-                                <p class="mb-4">{{ Str::limit($description, 150) }}</p>
+                                <h3 class="fw-bold mb-3">{!! $name !!}</h3>
+                                <p class="mb-4">{!! Str::limit($description, 150) !!}</p>
 
                                 <div class="text-end">
                                     @if($service->pdf && Storage::disk('public')->exists($service->pdf))
-                                        <a href="{{ asset('storage/' . $service->pdf) }}"
+                                        <a href="{{ asset('/' . $service->pdf) }}"
                                            target="_blank"
                                            class="btn btn-black text-white button border-0">
                                             <span>{{ $isArabic ? 'تحميل PDF' : 'Download PDF' }}</span>

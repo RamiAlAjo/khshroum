@@ -12,7 +12,7 @@
                 <div class="swiper-wrapper">
                     @foreach($album->photos as $photo)
                         <div class="swiper-slide">
-                            <img src="{{ asset('storage/' . $photo->album_images) }}"
+                            <img src="{{ asset('/' . $photo->album_images) }}"
                                 class="img-fluid w-100 h-100"
                                 style="object-fit: cover; border-radius: 8px;">
                         </div>
@@ -28,7 +28,7 @@
                 <div class="swiper-wrapper">
                     @foreach($album->photos as $photo)
                         <div class="swiper-slide" style="width: 50px; height: 150px;">
-                            <img src="{{ asset('storage/' . $photo->album_images) }}"
+                            <img src="{{ asset('/' . $photo->album_images) }}"
                                 class="w-50 h-50 rounded"
                                 style="object-fit: cover;">
                         </div>

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; // For file operations
 
 class AdminProductCategoriesController extends Controller
 {
@@ -39,7 +39,9 @@ class AdminProductCategoriesController extends Controller
         // Handle image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('category_images', 'public');
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName(); // Generate a unique image name
+            $imagePath = 'uploads/category_images/' . $imageName;  // Set the image path relative to 'public/'
+            $request->file('image')->move(public_path('uploads/category_images'), $imageName); // Move the image to the uploads folder
         }
 
         // Create the category
@@ -76,13 +78,18 @@ class AdminProductCategoriesController extends Controller
         ]);
 
         // Handle image upload
-        $imagePath = $productCategory->image;
+        $imagePath = $productCategory->image; // Keep the old image path
         if ($request->hasFile('image')) {
             // Delete the old image if exists
-            if ($imagePath) {
-                Storage::disk('public')->delete($imagePath);
+            $oldImagePath = public_path($imagePath);
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
             }
-            $imagePath = $request->file('image')->store('category_images', 'public');
+
+            // Upload new image
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName(); // Generate a unique image name
+            $imagePath = 'uploads/category_images/' . $imageName; // Set the image path relative to 'public/'
+            $request->file('image')->move(public_path('uploads/category_images'), $imageName); // Move the image
         }
 
         // Update the category
@@ -104,7 +111,10 @@ class AdminProductCategoriesController extends Controller
     {
         // Delete the image file if exists
         if ($productCategory->image) {
-            Storage::disk('public')->delete($productCategory->image);
+            $oldImagePath = public_path($productCategory->image);
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
+            }
         }
 
         // Delete the category

@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Models\Link;
-
 
 class LinksController extends Controller
 {
@@ -28,7 +27,18 @@ class LinksController extends Controller
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
-        $data['image'] = $request->file('image')->store('links', 'public');
+        // Ensure the 'uploads/links' directory exists
+        $imageDirectory = public_path('uploads/links');
+        if (!File::exists($imageDirectory)) {
+            File::makeDirectory($imageDirectory, 0755, true);  // Creates the directory if it doesn't exist
+        }
+
+        // Handle image file upload
+        $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+        $imagePath = 'uploads/links/' . $imageName;
+        $request->file('image')->move(public_path('uploads/links'), $imageName);
+
+        $data['image'] = $imagePath;
 
         Link::create($data);
 
@@ -51,14 +61,25 @@ class LinksController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($link->image && Storage::disk('public')->exists($link->image)) {
-                Storage::disk('public')->delete($link->image);
+            // Ensure the 'uploads/links' directory exists
+            $imageDirectory = public_path('uploads/links');
+            if (!File::exists($imageDirectory)) {
+                File::makeDirectory($imageDirectory, 0755, true);  // Creates the directory if it doesn't exist
             }
 
-            $data['image'] = $request->file('image')->store('links', 'public');
+            // Delete old image if it exists
+            if ($link->image && File::exists(public_path($link->image))) {
+                File::delete(public_path($link->image)); // Delete old image
+            }
+
+            // Handle new image upload
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $imagePath = 'uploads/links/' . $imageName;
+            $request->file('image')->move(public_path('uploads/links'), $imageName);
+
+            $data['image'] = $imagePath;
         } else {
-            $data['image'] = $link->image; // keep old image
+            $data['image'] = $link->image; // Keep old image
         }
 
         $link->update($data);
@@ -69,6 +90,11 @@ class LinksController extends Controller
     public function destroy($id)
     {
         $link = Link::findOrFail($id);
+
+        // Delete the image file if it exists
+        if ($link->image && File::exists(public_path($link->image))) {
+            File::delete(public_path($link->image)); // Delete image
+        }
 
         $link->delete();
 

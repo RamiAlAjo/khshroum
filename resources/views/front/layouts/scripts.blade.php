@@ -26,3 +26,16 @@
         integrity="sha384-YkmZtk+9iwxo6Ed01dNlAPmj1uo1JbsGA9pFn6Q0gA2d6v57xcp9z5zSMuBz1tGS"
         crossorigin="anonymous" defer></script>
 
+
+<!-- Summernote JS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js" defer></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $('#summernote').summernote({
+      placeholder: 'Write your content here...',
+      tabsize: 2,
+      height: 200
+    });
+  });
+</script>

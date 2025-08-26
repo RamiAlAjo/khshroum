@@ -66,18 +66,18 @@
                         <input type="file" class="form-control" name="image" accept="image/*">
                     </div>
 
-                    <div class="form-group">
-                        <label for="pdf">Upload PDF</label>
-                        <input type="file" name="pdf" id="pdf" class="form-control shadow-sm" accept="application/pdf">
-                        @error('pdf')
-                            <div class="alert alert-danger mt-2">{{ $message }}</div>
-                        @enderror
+                     <div class="form-group">
+            <label for="pdf">Upload PDF</label>
+            <input type="file" name="pdf" id="pdf" class="form-control shadow-sm" accept="application/pdf">
+            @error('pdf')
+                <div class="alert alert-danger mt-2">{{ $message }}</div>
+            @enderror
 
-                        @if(isset($product) && $product->pdf)
-                            <p class="mt-2">
-                                <a href="{{ asset('storage/' . $product->pdf) }}" target="_blank">Download existing PDF</a>
-                            </p>
-                        @endif
+            @if(isset($product) && $product->pdf)
+                <p class="mt-2">
+                    <a href="{{ asset('pdfs/' . $product->pdf) }}" target="_blank">Download existing PDF</a>
+                </p>
+            @endif
                     </div>
 
                     <!-- Category -->

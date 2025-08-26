@@ -14,25 +14,27 @@
             @endphp
 
             {{-- Display the first section with image on the right --}}
-            @if ($index === 0)
-                <div class="row mb-5 align-items-center aboutUs">
-                    <div class="col-md-8">
-                        <h2 class="fw-bold mb-3">{{ $title }}</h2>
-                        <p class="mb-5">{{ $description }}</p>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <img src="{{ asset('storage/' . $section->image) }}" alt="{{ $title }}" class="img-fluid rounded">
-                    </div>
-                </div>
-            @else
-                {{-- Display the other sections --}}
-                <div class="row mb-5 aboutUs">
-                    <div class="col-12 {{ $isArabic ? 'text-right' : 'text-left' }}">
-                        <h2 class="fw-bold mb-3">{{ $title }}</h2>
-                        <p class="mb-5">{{ $description }}</p>
-                    </div>
-                </div>
-            @endif
+          {{-- First section with image --}}
+@if ($index === 0)
+    <div class="row mb-5 align-items-center aboutUs">
+        <div class="col-md-8">
+            <h2 class="fw-bold mb-3">{{ $title }}</h2>
+            <div class="mb-5">{!! $description !!}</div>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="{{ asset('storage/' . $section->image) }}" alt="{{ $title }}" class="img-fluid rounded">
+        </div>
+    </div>
+@else
+    {{-- Other sections --}}
+    <div class="row mb-5 aboutUs">
+        <div class="col-12 {{ $isArabic ? 'text-right' : 'text-left' }}">
+            <h2 class="fw-bold mb-3">{{ $title }}</h2>
+            <div class="mb-5">{!! $description !!}</div>
+        </div>
+    </div>
+@endif
+
         @endforeach
 
         {{-- Team Members Section --}}
@@ -56,7 +58,7 @@
                                     <h5 class="card-title">{{ $isArabic ? $member->name_ar : $member->name_en }}</h5>
                                     <p>{{ $isArabic ? $member->position_ar : $member->position_en }}</p>
                                     <p>{{ $isArabic ? $member->bio_ar : $member->bio_en }}</p>
-                                    <img src="{{ asset('storage/' . $member->image) }}" alt="{{ $isArabic ? $member->name_ar : $member->name_en }}" class="img-fluid mt-3">
+                                    <img src="{{ asset('/' . $member->image) }}" alt="{{ $isArabic ? $member->name_ar : $member->name_en }}" class="img-fluid mt-3">
                                 </div>
                             </div>
                         </div>
